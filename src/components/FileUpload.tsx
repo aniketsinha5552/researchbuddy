@@ -75,7 +75,7 @@ const FileUpload = () => {
 
       console.log(process.env.AWS_S3_URL)
       let res3 = await axios.post("/api/createFile",{
-        url: `${fileName}`,
+        url: `${process.env.NEXT_PUBLIC_S3_URL}/${fileName}`,
         name: file?.name
       })
 

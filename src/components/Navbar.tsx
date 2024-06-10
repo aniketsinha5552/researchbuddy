@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <div className=' p-4 flex justify-between items-center shadow-lg'>
-      <div onClick={() => router.push('/')} className='text-3xl font-semibold cursor-pointer hover:text-gray-300 transition-colors'>
+      <div onClick={() => router.push('/')} className='text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
         Research Buddy
       </div>
       

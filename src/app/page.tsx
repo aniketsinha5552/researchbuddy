@@ -1,23 +1,14 @@
-import Card from "@/components/card";
-import Image from "next/image";
+import Dashboard from "@/components/Dashboard";
+import { ToastContainer } from "react-toastify";
 
-export default function Home() {
+export default async function Home() {
+
+  
   return (
      <div className="p-4">
         {/* <h1 className="text-2xl">Research Buddy</h1>  */}
-        <div className="flex flex-row flex-wrap gap-5">
-        <Card>
-            File 1
-         </Card>
-         <Card>
-            File 2
-         </Card>
-         <Card>
-        <input type="file" placeholder="upload pdf"/>
-
-         </Card>
-        </div>
-
+      <Dashboard/>
+      <ToastContainer/>
      </div>
   );
 }

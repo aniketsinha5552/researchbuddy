@@ -48,6 +48,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  files         File[]
 }
 
 model VerificationToken {
@@ -56,4 +57,14 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model File{
+  id            String    @id @default(cuid()) @map("_id")
+  name         String
+  url          String?
+  user_id String
+  user User @relation(fields: [user_id],references: [id])
+  created_at  DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 }

@@ -32,8 +32,8 @@ body {
 }
 
 .light{
-  background-color: white;
-  color: black;
+  background-color: #ddd;
+  color: #0f172a;
 }
 @layer utilities {
   .text-balance {

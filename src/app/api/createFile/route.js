@@ -25,9 +25,11 @@ export const POST= async(req,res)=>{
             user_id : user[0].id
           }
         })
-        return new NextResponse(JSON.stringify(file))
+        return NextResponse.json({file:file},{status:200})
         
        }catch(e){
         return new NextResponse(JSON.stringify(e.message))
+       }finally{
+         await prisma.$disconnect()
        }
 }

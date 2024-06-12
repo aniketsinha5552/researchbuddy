@@ -62,22 +62,21 @@ const FileUpload = () => {
           data: file,
           timeout: 10000 // Set a reasonable timeout value
         });
+
+        let res3 = await axios.post("/api/createFile",{
+          url: `${process.env.NEXT_PUBLIC_S3_URL}/${fileName}`,
+          name: file?.name
+        })
+  
         console.log('File uploaded successfully:', response.data);
       } catch (e: any) {
         console.log(e)
       }
       
-      console.log('File uploaded successfully');
       setFile(null)
       if (fileRef.current) {
         fileRef.current.value = '';
       }
-
-      console.log(process.env.AWS_S3_URL)
-      let res3 = await axios.post("/api/createFile",{
-        url: `${process.env.NEXT_PUBLIC_S3_URL}/${fileName}`,
-        name: file?.name
-      })
 
       // setDisableUpload(false)
       notify()

@@ -29,6 +29,12 @@ const File = ({params}: any) => {
     if(res.data.text== null) setError(true)
   }
 
+  const analyze=async()=>{
+    await axios.post("/api/embed",{
+      text: text
+    })
+  }
+
   return (
     <div className='p-5'>
       {file &&
@@ -39,13 +45,14 @@ const File = ({params}: any) => {
         <Link href={file?.url} target='_blank'>View File</Link>
         </Button>
       </div>
-
+      {text.length>0 && <p>String Length: {text.length}</p>}
       <div className='p-5 m-2 max-h-96 overflow-y-auto bg-white text-black rounded-md'>
         {loading? <>...Parsing Text</> : <>{text}</>}
         {error && <p className='text-red-500'>Error Parsing Text</p>}
         
       </div>
 
+      <button style={{backgroundColor:"red"}} onClick={analyze}>Analyze</button>
        </div>
       }
 

@@ -63,9 +63,14 @@ const FileUpload = () => {
           timeout: 10000 // Set a reasonable timeout value
         });
 
+        let arr = file.name.split('.')
+        arr.pop()
+        let name = arr.join()
+        console.log(name)
+
         let res3 = await axios.post("/api/createFile",{
           url: `${process.env.NEXT_PUBLIC_S3_URL}/${fileName}`,
-          name: file?.name
+          name: name
         })
   
         console.log('File uploaded successfully:', response.data);

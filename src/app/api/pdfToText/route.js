@@ -19,9 +19,7 @@ export const GET = async (req, { params }) => {
     }
 
     let url = file.url;
-    let text = await GetTextFromPDF(url)
-    console.log(text)
-    
+    let text = await GetTextFromPDF(url)    
 
     return NextResponse.json({ text: text },{status:200});
 

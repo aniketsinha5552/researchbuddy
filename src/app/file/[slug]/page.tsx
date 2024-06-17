@@ -31,7 +31,7 @@ const File = ({params}: any) => {
 
   const analyze=async()=>{
     await axios.post("/api/embed",{
-      text: text
+      fileId: slug
     })
   }
 

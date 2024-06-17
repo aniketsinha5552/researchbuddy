@@ -3,12 +3,28 @@ import { splitter } from "../../../utils/splitter"
 import { createClient } from "@supabase/supabase-js";
 import {SupabaseVectorStore} from "langchain/vectorstores/supabase"
 import  {OpenAIEmbeddings} from "langchain/embeddings/openai";
-import { v4 as uuidv4 } from 'uuid';
+import { PrismaClient } from "@prisma/client";
+import { GetTextFromPDF } from "@/utils/textExtractor";
 
 export const POST = async(req,res)=>{
     const body = await req.json()
 
-    const text = body.text;
+    // const text = body.text;
+    let prisma = new PrismaClient();
+
+    const fileId = body.fileId
+
+    const file = await prisma.file.findFirst({
+      where: {
+          id: fileId
+      }
+    }); 
+    if(!file){
+      return NextResponse.json({ error: "File not found" }, { status: 404 });
+    }
+
+    let url = file.url;
+    let text = await GetTextFromPDF(url)  
     const data = await splitter(text)
 
     const sbAPIKey = process.env.SUPABASE_KEY;
@@ -20,7 +36,7 @@ export const POST = async(req,res)=>{
         pageContent: doc.pageContent,
         metadata: {
             ...doc.metadata,
-            fileId : 999
+            fileId : fileId
         }
     }));
     
@@ -40,6 +56,7 @@ export const POST = async(req,res)=>{
       }
     
       // console.log(text)
+      await prisma.$disconnect()
 
     return NextResponse.json({data:data},{status:200})
 }

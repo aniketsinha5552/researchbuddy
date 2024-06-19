@@ -40,7 +40,6 @@ export const POST = async(req,res)=>{
         }
     }));
     
-
     const client = createClient(sbUrl,sbAPIKey);
     try {
         await SupabaseVectorStore.fromDocuments(

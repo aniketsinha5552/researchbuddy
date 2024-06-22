@@ -63,6 +63,7 @@ model File {
   id         String    @id @default(cuid()) @map("_id")
   name       String
   url        String?
+  embed      Boolean? @default(false)
   user_id    String
   user       User      @relation(fields: [user_id], references: [id])
   created_at DateTime? @default(now())

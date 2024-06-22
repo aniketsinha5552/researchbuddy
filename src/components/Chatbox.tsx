@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Message } from '@prisma/client'
+import { File, Message } from '@prisma/client'
 import { ThemeContext } from '@/context/ThemeContext'
 
 
-const Chatbox = ({ slug }: {
-  slug: string
+const Chatbox = ({ slug ,file}: {
+  slug: string,
+  file: File
 }) => {
 
   const {theme} = useContext(ThemeContext)
@@ -57,10 +58,10 @@ const Chatbox = ({ slug }: {
     })
   }
   return (
-    <div className="flex flex-col items-center min-h-screen py-3 flex-1 max-h-[80hv] overflow-hidden">
+    <div className="flex flex-col items-center min-h-[80vh] py-3 flex-1 max-h-[80vh] overflow-hidden">
       <h1>Chat History</h1>
     <div className={`w-full max-w-full rounded-lg shadow-md p-4 ${theme=="dark"? 'bg-slate-800' : 'bg-slate-300'}`}>
-      <div className="mb-4 space-y-2 max-h-[60vh] overflow-y-auto overflow-x-hidden p-2">
+      <div className="mb-4 space-y-2 min-h-[60vh] max-h-[60vh] overflow-y-auto overflow-x-hidden p-2">
         {chat.length > 0 && chat.map((message: Message) => (
           <div
             key={message.id}

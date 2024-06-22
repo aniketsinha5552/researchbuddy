@@ -43,7 +43,7 @@ const File = ({params}: any) => {
   return (
     <div className='p-5 flex flex-col md:flex-row'>
       {file &&
-       <div className='flex-1'>
+       <div className='flex-1 w-full'>
       <h1 className='text-2xl text-center'>{file?.name}</h1>
       <div className='text-right flex'>
         <Button type='primary'>
@@ -61,7 +61,7 @@ const File = ({params}: any) => {
        </div>
       }
       <div className='flex-1 max-h-[80vh] overflow-hidden'>
-       <Chatbox slug={slug}/>
+       <Chatbox slug={slug} file={file}/>
       </div>
 
     </div>

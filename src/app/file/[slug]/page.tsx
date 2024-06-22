@@ -1,11 +1,14 @@
 "use client"
 import Chatbox from '@/components/Chatbox'
 import Button from '@/components/button'
+import { ThemeContext } from '@/context/ThemeContext'
 import axios from 'axios'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const File = ({params}: any) => {
+
+  const {theme} = useContext(ThemeContext)
   const {slug} = params
   const [file,setFile] = useState<any>(null)
   const [text,setText] = useState<string>("")
@@ -38,7 +41,7 @@ const File = ({params}: any) => {
 
 
   return (
-    <div className='p-5 flex flex-row'>
+    <div className='p-5 flex flex-col md:flex-row'>
       {file &&
        <div className='flex-1'>
       <h1 className='text-2xl text-center'>{file?.name}</h1>
@@ -48,7 +51,7 @@ const File = ({params}: any) => {
         </Button>
       </div>
       {text.length>0 && <p className='mt-1'>String Length: {text.length}</p>}
-      <div className='p-5 m-2 max-h-[60vh] overflow-y-auto overflow-x-hidden bg-white text-black rounded-md'>
+      <div className={`p-5 m-2 max-h-[60vh] overflow-y-auto overflow-x-hidden ${theme=="dark"? 'bg-slate-800 text-slate-300' : 'bg-slate-300 text-slate-800'} text-black rounded-md`}>
         {loading? <>...Parsing Text</> : <>{text}</>}
         {error && <p className='text-red-500'>Error Parsing Text</p>}
         
@@ -57,7 +60,7 @@ const File = ({params}: any) => {
 
        </div>
       }
-      <div className='bg-slate-800 flex-1 p-3'>
+      <div className='flex-1 max-h-[80vh] overflow-hidden'>
        <Chatbox slug={slug}/>
       </div>
 

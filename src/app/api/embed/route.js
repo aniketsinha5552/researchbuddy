@@ -26,7 +26,7 @@ export const POST = async(req,res)=>{
     let url = file.url;
     let text = await GetTextFromPDF(url)  
     if(text.length> 5000){
-      text = text.substring(1,15000)
+      text = text.substring(1,10000)
     }
     const data = await splitter(text)
 

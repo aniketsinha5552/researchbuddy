@@ -59,12 +59,24 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model File{
-  id            String    @id @default(cuid()) @map("_id")
-  name         String
-  url          String?
-  user_id String
-  user User @relation(fields: [user_id],references: [id])
-  created_at  DateTime? @default(now())
+model File {
+  id         String    @id @default(cuid()) @map("_id")
+  name       String
+  url        String?
+  user_id    String
+  user       User      @relation(fields: [user_id], references: [id])
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
+  messages   Message[]
+}
+
+model Message {
+  id         String    @id @default(cuid()) @map("_id")
+  text       String
+  sequence   Int
+  type       String?
+  file_id    String
+  file       File     @relation(fields: [file_id], references: [id])
+  created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
 }

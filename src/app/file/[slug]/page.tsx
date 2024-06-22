@@ -44,13 +44,13 @@ const File = ({params}: any) => {
     <div className='p-5 flex flex-col md:flex-row'>
       {file &&
        <div className='flex-1 w-full'>
-      <h1 className='text-2xl text-center'>{file?.name}</h1>
+         <h1 className='text-2xl text-center'>{file?.name}</h1>
       <div className='text-right flex'>
         <Button type='primary'>
         <Link href={file?.url} target='_blank'>View File</Link>
         </Button>
       </div>
-      {text.length>0 && <p className='mt-1'>String Length: {text.length}</p>}
+      {/* {text.length>0 && <p className='mt-1'>String Length: {text.length}</p>} */}
       <div className={`p-5 m-2 max-h-[60vh] overflow-y-auto overflow-x-hidden ${theme=="dark"? 'bg-slate-800 text-slate-300' : 'bg-slate-300 text-slate-800'} text-black rounded-md`}>
         {loading? <>...Parsing Text</> : <>{text}</>}
         {error && <p className='text-red-500'>Error Parsing Text</p>}

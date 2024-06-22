@@ -25,7 +25,8 @@ const Dashboard = () => {
          return(
             <div onClick={()=>router.push(`/file/${file.id}`)} key={file.id}>
             <Card >
-               {file?.name}
+               <p className="text-bold text-2xl">{file?.name}</p>
+               <p className="text-md">Created At: {new Date(file.created_at).toDateString()}</p> 
             </Card>
             </div>
          )

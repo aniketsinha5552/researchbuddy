@@ -22,6 +22,9 @@ export const POST = async(req,res)=>{
     if(!file){
       return NextResponse.json({ error: "File not found" }, { status: 404 });
     }
+    if(file.embed== true){
+      return NextResponse.json({message: "File already analyzed"},{status:200})
+    }
 
     let url = file.url;
     let text = await GetTextFromPDF(url)  

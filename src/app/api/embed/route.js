@@ -59,6 +59,15 @@ export const POST = async(req,res)=>{
       } catch (e) {
         console.log(e);
       }
+
+      await prisma.file.update({
+        where:{
+          id: fileId
+        },
+        data:{
+          embed: true
+        }
+      })
     
       // console.log(text)
       await prisma.$disconnect()

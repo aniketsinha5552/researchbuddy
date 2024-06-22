@@ -28,6 +28,7 @@ const Chatbox = ({ slug ,file}: {
   const askQuestion = async () => {
 
     if(ques=="") return
+    setQues("")
 
     setChat((prev:Message[])=> [...prev,{
       text: ques,
@@ -39,7 +40,6 @@ const Chatbox = ({ slug ,file}: {
       fileId: slug
     })
     
-    setQues("")
     setChat((prev:Message[])=> [...prev, {
       text: res.data,
       type: "BOT"

@@ -5,7 +5,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const FileUpload = () => {
+const FileUpload = ({getFiles}:{
+  getFiles: ()=>{}
+}) => {
   const fileRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<any>(null);
   const [error, setError] = useState('');
@@ -74,6 +76,7 @@ const FileUpload = () => {
         })
   
         console.log('File uploaded successfully:', response.data);
+        getFiles()
       } catch (e: any) {
         console.log(e)
       }

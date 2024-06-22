@@ -26,14 +26,14 @@ const Dashboard = () => {
             <div onClick={()=>router.push(`/file/${file.id}`)} key={file.id}>
             <Card >
                <p className="text-bold text-2xl">{file?.name}</p>
-               <p className="text-md">Created At: {new Date(file.created_at).toDateString()}</p> 
+               <p className="text-md text-slate-500">Created At: {new Date(file.created_at).toDateString()}</p> 
             </Card>
             </div>
          )
     }) 
     }
     <Card>
-      <FileUpload/>
+      <FileUpload getFiles={getFiles}/>
     </Card>
    </div>
   )

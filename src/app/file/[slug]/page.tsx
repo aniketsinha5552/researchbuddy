@@ -1,4 +1,5 @@
 "use client"
+import Chatbox from '@/components/Chatbox'
 import Button from '@/components/button'
 import axios from 'axios'
 import Link from 'next/link'
@@ -10,9 +11,6 @@ const File = ({params}: any) => {
   const [text,setText] = useState<string>("")
   const [loading,setLoading] = useState(true)
   const [error,setError] = useState(false)
-
-  const [ques,setQues] = useState("")
-  const [ans,setAns] = useState("")
 
   const getFile=async()=>{
     let res = await axios.get(`/api/file/${slug}`)
@@ -38,14 +36,6 @@ const File = ({params}: any) => {
     })
   }
 
-  const askQuestion = async()=>{
-    let res = await axios.post("/api/ask",{
-      question: ques,
-      fileId: slug
-    })
-    console.log(res.data)
-    setAns(res.data)
-  }
 
   return (
     <div className='p-5 flex flex-row'>
@@ -57,22 +47,18 @@ const File = ({params}: any) => {
         <Link href={file?.url} target='_blank'>View File</Link>
         </Button>
       </div>
-      {text.length>0 && <p>String Length: {text.length}</p>}
-      <div className='p-5 m-2 max-h-[80vh] overflow-y-auto bg-white text-black rounded-md'>
+      {text.length>0 && <p className='mt-1'>String Length: {text.length}</p>}
+      <div className='p-5 m-2 max-h-[60vh] overflow-y-auto overflow-x-hidden bg-white text-black rounded-md'>
         {loading? <>...Parsing Text</> : <>{text}</>}
         {error && <p className='text-red-500'>Error Parsing Text</p>}
         
       </div>
+      <button className='bg-blue-500 rounded-md m-2 p-2' onClick={analyze}>Analyze</button>
 
        </div>
       }
       <div className='bg-slate-800 flex-1 p-3'>
-      <button className='bg-blue-500 rounded-md m-2 p-2' onClick={analyze}>Analyze</button>
-       <p>
-        <input className='text-black p-2 m-1 rounded-sm' value={ques} type='text' onChange={(e)=>setQues(e.target.value)} />
-        <button className='bg-slate-600 p-2 m-1 rounded-sm' onClick={askQuestion}>Go</button>
-        <p>=> {ans}</p> 
-       </p>
+       <Chatbox slug={slug}/>
       </div>
 
     </div>

@@ -1,11 +1,12 @@
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { PromptTemplate } from "langchain/prompts";
-import {retriever} from "./retriever"
+import { retriever } from "./retriever";
 import { StringOutputParser } from "langchain/schema/output_parser";
 import { combineDocs } from "./combineDocs";
 import { RunnableSequence, RunnablePassthrough } from "langchain/runnables";
 
-export async function standAlone(input_question) {
+export async function standAlone(input_question,fileId,file) {
+  // console.log(file)
   const openAIApiKey = process.env.OPENAI_KEY;
   const llm = new ChatOpenAI({ openAIApiKey });
 
@@ -13,43 +14,63 @@ export async function standAlone(input_question) {
   const standAloneQuestionTemplate =
     "Given a question, convert it to a standalone question. question: {question} standalone question: ";
 
-    //  A prompt created using the phrasing of the prompt
-    const standAloneQuestionPrompt = PromptTemplate.fromTemplate(
-      standAloneQuestionTemplate
-    );
+  //  A prompt created using the phrasing of the prompt
+  const standAloneQuestionPrompt = PromptTemplate.fromTemplate(
+    standAloneQuestionTemplate
+  );
 
-  const answerTemplate = `You are a heplful and enthusiastic support bot who can answer a given question about a PDF file based on the context provided. Try to find the answer in the context. If you really don't know the answer, say "I'm sorry, I don't know the answer to that question" And direct the user to email help@aniket.com. Don't try to make up an answer. Always speak as if you were chatting to a friend. context: {context}, question: {question}`;
-  const answerPrompt = PromptTemplate.fromTemplate(answerTemplate)
+  const answerTemplate = `You are a heplful 
+  and enthusiastic support bot for a Specific Document who can answer a given question about the Document based on the context provided. 
+  You should also be able to give a summary of the document.
+  Try to find the answer in the context. If you really don't know the answer, say "I'm sorry, 
+  I don't know the answer to that question" And direct the user to email aniketsinha5552@gmail.com. 
+  Don't try to make up an answer. Always speak as if you were chatting to a friend.
+  Here is some other info about the document: fileName: ${file.name}, uploaded by: ${file.user.name}, createdAt: ${file.created_at}
+  context: {context}, question: {question}`;
+  const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
 
 
   const standaloneQuestionChain = standAloneQuestionPrompt
     .pipe(llm)
-    .pipe(new StringOutputParser()
-  );
-  
+    .pipe(new StringOutputParser());
+
   const retrieverChain = RunnableSequence.from([
-    prevResult => prevResult.standalone_question,
+    (prevResult) => prevResult.standalone_question,
     retriever,
-    combineDocs
-  ])
-  const answerChain = answerPrompt.pipe(llm).pipe(new StringOutputParser())
+    // combineDocs,
+  ]);
+  const answerChain = answerPrompt.pipe(llm).pipe(new StringOutputParser());
+
+  // Take the standAlone prompt and pipe the model and the retriever
+  // const chain = standAloneQuestionPrompt
+  //   .pipe(llm)
+  //   .pipe(new StringOutputParser())
+  //   .pipe(retriever)
+  // .pipe(combineDocs);
 
   const chain = RunnableSequence.from([
     {
       standalone_question: standaloneQuestionChain,
-      original_input: new RunnablePassthrough()
+      original_input: new RunnablePassthrough(),
     },
     {
-      context: retrieverChain,
-      question: ({original_input})=> original_input.question
+      context1: retrieverChain,
+      question1: ({ original_input }) => original_input.question,
     },
-    answerChain
-  ])
+    // retrieved docs will be fileted based on fileId
+    {
+      context: ({context1})=>combineDocs(context1,file.id),
+      question: ({question1})=>question1,
+    },
+    answerChain,
+  ]);
 
   const response = await chain.invoke({
     question: input_question,
+    file: file
   });
 
+
+  console.log(response)
   return response;
 }
-

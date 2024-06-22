@@ -12,7 +12,7 @@ const client = createClient(sbUrl,sbApiKey)
 const vectorStore = new SupabaseVectorStore(embeddings,{
     client,
     tableName: 'documents',
-    queryName: 'match_documents'
+    queryName: 'match_docs'
 })
 
 export const retriever = vectorStore.asRetriever()

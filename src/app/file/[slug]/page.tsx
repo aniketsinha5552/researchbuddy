@@ -1,10 +1,12 @@
 "use client"
 import Chatbox from '@/components/Chatbox'
+import Notes from '@/components/Notes'
 import Button from '@/components/button'
 import { ThemeContext } from '@/context/ThemeContext'
 import axios from 'axios'
 import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 const File = ({ params }: any) => {
 
@@ -14,6 +16,8 @@ const File = ({ params }: any) => {
   const [text, setText] = useState<string>("")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+
+  const [tab,setTab]= useState("chat")
 
   const getFile = async () => {
     let res = await axios.get(`/api/file/${slug}`)
@@ -63,8 +67,16 @@ const File = ({ params }: any) => {
 
           </div>
           <div className='flex-1 max-h-[80vh] overflow-hidden'>
-            <Chatbox slug={slug} file={file} />
+            <div className='flex flex-row justify-around border-2 border-slate-400 rounded-sm'>
+            <button className={`flex-1 p-2 ${tab=="chat" && 'bg-slate-400'}`} onClick={()=>setTab("chat")}>Chat</button>
+            <button className={`flex-1 p-2 ${tab=="notes" && 'bg-slate-400'}`} onClick={()=>setTab("notes")}>Notes</button>
+            </div>
+            {tab=="chat"? 
+            <Chatbox slug={slug} file={file} /> :
+            <Notes/>
+            }
           </div>
+          <ToastContainer/>
         </>
       }
 

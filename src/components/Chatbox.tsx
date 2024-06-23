@@ -1,8 +1,10 @@
+"use client"
 import React, { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { File, Message } from '@prisma/client'
 import { ThemeContext } from '@/context/ThemeContext'
+import MessageComp from './MessageComp'
 
 
 const Chatbox = ({ slug ,file}: {
@@ -59,18 +61,11 @@ const Chatbox = ({ slug ,file}: {
   }
   return (
     <div className="flex flex-col items-center min-h-[80vh] py-3 flex-1 max-h-[80vh] overflow-hidden">
-      <h1>Chat History</h1>
+      {/* <h1>Chat History</h1> */}
     <div className={`w-full max-w-full rounded-lg shadow-md p-4 ${theme=="dark"? 'bg-slate-800' : 'bg-slate-300'}`}>
       <div className="mb-4 space-y-2 min-h-[60vh] max-h-[60vh] overflow-y-auto overflow-x-hidden p-2">
-        {chat.length > 0 && chat.map((message: Message) => (
-          <div
-            key={message.id}
-            className={`p-2 m-2 w-fit rounded text-white ${
-              message.type === 'USER' ? 'bg-green-500 ml-auto' : 'bg-blue-500 mr-auto'
-            }`}
-          >
-            <p className={` ${message.type === 'USER' ? 'text-right' : 'text-left'}`}>{message.text}</p>
-          </div>
+        {chat.length > 0 && chat.map((message: Message, idx:number) => (
+            <MessageComp message={message} key={idx}/>
         ))}
       </div>
       <div className="flex items-center">

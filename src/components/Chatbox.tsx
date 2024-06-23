@@ -60,7 +60,7 @@ const Chatbox = ({ slug ,file}: {
     })
   }
   return (
-    <div className="flex flex-col items-center min-h-[80vh] py-3 flex-1 max-h-[80vh] overflow-hidden">
+    <div className="flex flex-col items-center py-2 flex-1 overflow-hidden">
       {/* <h1>Chat History</h1> */}
     <div className={`w-full max-w-full rounded-lg shadow-md p-4 ${theme=="dark"? 'bg-slate-800' : 'bg-slate-300'}`}>
       <div className="mb-4 space-y-2 min-h-[60vh] max-h-[60vh] overflow-y-auto overflow-x-hidden p-2">

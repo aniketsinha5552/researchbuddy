@@ -18,7 +18,7 @@ const File = ({ params }: any) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  const [tab,setTab]= useState("chat")
+  const [tab, setTab] = useState("chat")
 
   const getFile = async () => {
     let res = await axios.get(`/api/file/${slug}`)
@@ -45,42 +45,35 @@ const File = ({ params }: any) => {
   }
 
   return (
-    <div className='p-5 flex flex-col md:flex-row'>
+    <div >
+      <div className='flex flex-row justify-center gap-2'>
+        <h1 className='text-2xl mt-2 text-center'>{file?.name}</h1>
+        {file && file.embed == false && <button className='bg-blue-500 rounded-md m-2 p-2' onClick={analyze}>Analyze</button>}
+      </div>
+
+
       {file &&
-        <>
-          
+        <div className='p-3 flex flex-col md:flex-row'>
+
           <div className='flex-1 w-full'>
-            <h1 className='text-2xl text-center'>{file?.name}</h1>
-            <div className='text-right flex'>
-              <Button type='primary'>
-                <Link href={file?.url} target='_blank'>View File</Link>
-              </Button>
-            </div>
-            {/* {text.length>0 && <p className='mt-1'>String Length: {text.length}</p>} */}
-            <div className={`p-5 m-2 max-h-[60vh] overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-slate-800 text-slate-300' : 'bg-slate-300 text-slate-800'} text-black rounded-md`}>
+            <div className={`p-5 m-2 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black rounded-md`}>
               {/* {loading ? <>...Parsing Text</> : <>{text}</>}
               {error && <p className='text-red-500'>Error Parsing Text</p>} */}
-              <PdfViewer fileUrl={file.url}/>
-
+              <PdfViewer fileUrl={file.url} />
             </div>
-             
-            {file.embed== false && <button className='bg-blue-500 rounded-md m-2 p-2' onClick={analyze}>Analyze</button>}
-            
-
-
           </div>
-          <div className='flex-1 max-h-[80vh] overflow-hidden'>
+          <div className='flex-1 overflow-hidden'>
             <div className='flex flex-row justify-around border-2 border-slate-400 rounded-sm'>
-            <button className={`flex-1 p-2 ${tab=="chat" && 'bg-slate-400'}`} onClick={()=>setTab("chat")}>Chat</button>
-            <button className={`flex-1 p-2 ${tab=="notes" && 'bg-slate-400'}`} onClick={()=>setTab("notes")}>Notes</button>
+              <button className={`flex-1 p-2 ${tab == "chat" && 'bg-slate-400'}`} onClick={() => setTab("chat")}>Chat</button>
+              <button className={`flex-1 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</button>
             </div>
-            {tab=="chat"? 
-            <Chatbox slug={slug} file={file} /> :
-            <Notes/>
+            {tab == "chat" ?
+              <Chatbox slug={slug} file={file} /> :
+              <Notes />
             }
           </div>
-          <ToastContainer/>
-        </>
+          <ToastContainer />
+        </div>
       }
 
     </div>

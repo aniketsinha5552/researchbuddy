@@ -5,14 +5,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const FileUpload = ({getFiles}:{
-  getFiles: ()=>{}
+const FileUpload = ({ getFiles }: {
+  getFiles: () => {}
 }) => {
   const fileRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<any>(null);
   const [error, setError] = useState('');
-  const [disableUpload, setDisableUpload]= useState(true)
-  
+  const [disableUpload, setDisableUpload] = useState(true)
+
   const notify = () => toast("File uploaded successfully");
 
   const handleFileChange = (e: any) => {
@@ -70,17 +70,17 @@ const FileUpload = ({getFiles}:{
         let name = arr.join()
         console.log(name)
 
-        let res3 = await axios.post("/api/createFile",{
+        let res3 = await axios.post("/api/createFile", {
           url: `${process.env.NEXT_PUBLIC_S3_URL}/${fileName}`,
           name: name
         })
-  
+
         console.log('File uploaded successfully:', response.data);
         getFiles()
       } catch (e: any) {
         console.log(e)
       }
-      
+
       setFile(null)
       if (fileRef.current) {
         fileRef.current.value = '';
@@ -95,13 +95,40 @@ const FileUpload = ({getFiles}:{
     }
   };
 
+  const removeFile=()=>{
+    setFile(null)
+    setDisableUpload(true)
+    if (fileRef.current) {
+      fileRef.current.value = '';
+    }
+
+  }
+
 
 
   return (
-    <div>
-      <input type="file" ref= {fileRef} id="file" onChange={handleFileChange} />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button style={{color: disableUpload?"gray":"green"}} onClick={handleUpload} disabled={disableUpload}>Upload</button>
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <input
+        type="file"
+        ref={fileRef}
+        id="file"
+        className="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+        onChange={handleFileChange}
+      />
+      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      <button
+        className={`mt-4 w-full px-4 py-2 text-white ${disableUpload ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} rounded-lg focus:outline-none`}
+        onClick={handleUpload}
+        disabled={disableUpload}
+      >
+        Upload
+      </button>
+      {!disableUpload && <button
+        className={`mt-4 w-full px-4 py-2 bg-red-500 rounded-lg focus:outline-none`}
+        onClick={removeFile}
+      >
+        Remove
+      </button>}
     </div>
   );
 };

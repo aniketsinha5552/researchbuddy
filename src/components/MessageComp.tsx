@@ -25,7 +25,7 @@ const MessageComp = ({ message }:{
             onClick={handleCopy}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
-            className={`relative p-3 m-2 w-fit rounded text-white cursor-pointer ${message.type === 'USER' ? 'bg-green-500 ml-auto hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700 mr-auto'
+            className={`relative p-3 m-2 w-fit rounded text-white cursor-pointer ${message.type === 'USER' ? 'bg-green-500 ml-auto hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600 mr-auto'
                 }`}
         >
 

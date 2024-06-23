@@ -1,6 +1,7 @@
 "use client"
 import Chatbox from '@/components/Chatbox'
 import Notes from '@/components/Notes'
+import PdfViewer from '@/components/PdfViewer'
 import Button from '@/components/button'
 import { ThemeContext } from '@/context/ThemeContext'
 import axios from 'axios'
@@ -22,7 +23,7 @@ const File = ({ params }: any) => {
   const getFile = async () => {
     let res = await axios.get(`/api/file/${slug}`)
     setFile(res.data)
-    generateText(res?.data?.id)
+    // generateText(res?.data?.id)
   }
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const File = ({ params }: any) => {
     <div className='p-5 flex flex-col md:flex-row'>
       {file &&
         <>
+          
           <div className='flex-1 w-full'>
             <h1 className='text-2xl text-center'>{file?.name}</h1>
             <div className='text-right flex'>
@@ -56,8 +58,9 @@ const File = ({ params }: any) => {
             </div>
             {/* {text.length>0 && <p className='mt-1'>String Length: {text.length}</p>} */}
             <div className={`p-5 m-2 max-h-[60vh] overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-slate-800 text-slate-300' : 'bg-slate-300 text-slate-800'} text-black rounded-md`}>
-              {loading ? <>...Parsing Text</> : <>{text}</>}
-              {error && <p className='text-red-500'>Error Parsing Text</p>}
+              {/* {loading ? <>...Parsing Text</> : <>{text}</>}
+              {error && <p className='text-red-500'>Error Parsing Text</p>} */}
+              <PdfViewer fileUrl={file.url}/>
 
             </div>
              

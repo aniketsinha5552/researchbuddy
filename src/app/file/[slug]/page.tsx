@@ -43,11 +43,17 @@ const File = ({ params }: any) => {
 
   const analyze = async () => {
     setLoading(true)
-    await axios.post("/api/embed", {
-      fileId: slug
-    })
-    notify()
-    getFile()
+    try{
+      await axios.post("/api/embed", {
+        fileId: slug
+      })
+      notify()
+      getFile()
+    }catch(e){
+      alert("Ran into some error. Please try again")
+      setLoading(false)
+    }
+
   }
 
   return (

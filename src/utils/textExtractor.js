@@ -2,7 +2,7 @@ import axios from "axios";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://github.com/aniketsinha5552/researchbuddy/blob/6194335422221fa89cb3ada75c338a54ab126e53/public/pdf.worker.min.js`;
 export async function GetTextFromPDF(url) {
     try {
         // Fetch the PDF from the URL

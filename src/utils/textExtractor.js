@@ -2,7 +2,7 @@ import axios from "axios";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
+pdfjsLib.GlobalWorkerOptions.workerSrc = `${process.env.NEXTAUTH_URL}/pdf.worker.min.js`;
 export async function GetTextFromPDF(url) {
     try {
         // Fetch the PDF from the URL

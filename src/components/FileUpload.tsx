@@ -107,7 +107,7 @@ const FileUpload = ({ getFiles }: {
 
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 rounded-lg shadow-md">
       <input
         type="file"
         ref={fileRef}

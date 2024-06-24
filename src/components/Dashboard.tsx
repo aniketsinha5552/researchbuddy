@@ -31,6 +31,9 @@ const Dashboard = () => {
   const router = useRouter()
   return (
     <div className="flex flex-row flex-wrap gap-8">
+    <Card>
+      <FileUpload getFiles={getFiles}/>
+    </Card>
     { files.length>0 &&  files?.map((file: any)=>{
          return(
             <div onClick={()=>router.push(`/file/${file.id}`)} key={file.id}>
@@ -43,9 +46,6 @@ const Dashboard = () => {
          )
     }) 
     }
-    <Card>
-      <FileUpload getFiles={getFiles}/>
-    </Card>
    </div>
   )
 }

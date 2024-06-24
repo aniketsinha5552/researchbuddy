@@ -3,7 +3,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import Button from "./button"
-import ThemeToggle from "../components/themeToggle/themeToggle"
+import ThemeToggle from "./themeToggle/ThemeToggle"
 
 const Navbar = () => {
   const router = useRouter()

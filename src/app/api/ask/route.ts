@@ -25,7 +25,13 @@ export const POST = async(req: Request,res: Response)=>{
             return NextResponse.json({error:"Invalid File Id"},{status:404})
           }
 
-          const ans = await standAlone(question,fileId,file);
+          let messages = await prisma.message.findMany({
+               where:{
+                   file_id: fileId
+               }
+           })
+
+          const ans = await standAlone(question,fileId,file,messages);
           return NextResponse.json(ans)
 
      }catch(e:any){

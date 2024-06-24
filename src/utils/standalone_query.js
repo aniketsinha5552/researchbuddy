@@ -4,9 +4,10 @@ import { retriever } from "./retriever";
 import { StringOutputParser } from "langchain/schema/output_parser";
 import { combineDocs } from "./combineDocs";
 import { RunnableSequence, RunnablePassthrough } from "langchain/runnables";
+import { chatFormatter } from "./chatFormatter";
 
-export async function standAlone(input_question,fileId,file) {
-  // console.log(file)
+export async function standAlone(input_question,fileId,file, chatHistory) {
+  const formattedChat = chatFormatter(chatHistory)
   const openAIApiKey = process.env.OPENAI_KEY;
   const llm = new ChatOpenAI({ openAIApiKey });
 
@@ -26,6 +27,7 @@ export async function standAlone(input_question,fileId,file) {
   I don't know the answer to that question" And direct the user to email aniketsinha5552@gmail.com. 
   Don't try to make up an answer. Always speak as if you were chatting to a friend.
   Here is some other info about the document: fileName: ${file.name}, uploaded by: ${file.user.name}, createdAt: ${file.created_at}
+  Also refer to previous chat for context. Here is he chat history in the following format [USER: message, BOT:message, ...], ${formattedChat}
   context: {context}, question: {question}`;
   const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
 

@@ -43,12 +43,6 @@ export async function standAlone(input_question,fileId,file, chatHistory) {
   ]);
   const answerChain = answerPrompt.pipe(llm).pipe(new StringOutputParser());
 
-  // Take the standAlone prompt and pipe the model and the retriever
-  // const chain = standAloneQuestionPrompt
-  //   .pipe(llm)
-  //   .pipe(new StringOutputParser())
-  //   .pipe(retriever)
-  // .pipe(combineDocs);
 
   const chain = RunnableSequence.from([
     {

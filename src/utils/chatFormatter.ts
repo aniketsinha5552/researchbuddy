@@ -5,6 +5,5 @@ export const chatFormatter=(chat: Message[]): string=>{
     chat.forEach((message:Message)=>{
         ans = ans+ `${message.type}: ${message.text}, `
     })
-    console.log(ans)
     return ans
 }

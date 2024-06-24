@@ -19,9 +19,14 @@ const Dashboard = () => {
       getFiles()
    },[])
 
-   const deleteFile=(e:any,fileId:string)=>{
-       alert("File Deleted")
+
+
+   const deleteFile=async(e:any,fileId:string)=>{
        e.stopPropagation()
+       alert("Warning the File and all the associated messages will be deleted")
+       let res = await axios.post(`/api/file/${fileId}`)
+
+       getFiles()
    }
 
   const router = useRouter()

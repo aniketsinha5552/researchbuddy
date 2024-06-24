@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import {standAlone} from "../../../utils/standalone_query"
 import { PrismaClient } from "@prisma/client";
-import { error } from "console";
 
 
 export const POST = async(req: Request,res: Response)=>{

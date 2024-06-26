@@ -1,15 +1,38 @@
 import { ThemeContext } from '@/context/ThemeContext'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import Tiptap from './Tiptap'
+import axios from 'axios'
+import { usePathname } from 'next/navigation'
 
 const Notes = () => {
     const { theme } = useContext(ThemeContext)
+    const [content, setContent] = useState<string>('')
+    const handleContentChange = (reason: any) => {
+      setContent(reason)
+    }
+
+    const pathname = usePathname()
+    const fileId = pathname.split("/")[2]
+    const getNotes = async()=>{
+      let res = await axios.get(`/api/notes?fileId=${fileId}`)
+      console.log(res.data.content)
+      setContent(res.data.content)
+    }
+
+    useEffect(()=>{
+      getNotes()
+    },[])
+
+
     return (
         <div className="flex flex-col items-center min-h-[80vh] py-3 flex-1 max-h-[80vh] overflow-hidden">
             <div className={`w-full max-w-full min-h-[80vh] rounded-lg shadow-md p-4 ${theme == "dark" ? 'bg-slate-800' : 'bg-slate-300'}`}>
-                   Coming Soon
+            <Tiptap
+            content={content}
+            onChange={(newContent: string) => handleContentChange(newContent)}
+            />
             </div>
             <div className="flex items-center">
-
 
             </div>
         </div>

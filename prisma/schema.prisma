@@ -63,7 +63,7 @@ model File {
   id         String    @id @default(cuid()) @map("_id")
   name       String
   url        String?
-  embed      Boolean? @default(false)
+  embed      Boolean?  @default(false)
   user_id    String
   user       User      @relation(fields: [user_id], references: [id])
   created_at DateTime? @default(now())
@@ -77,7 +77,15 @@ model Message {
   sequence   Int
   type       String?
   file_id    String
-  file       File     @relation(fields: [file_id], references: [id])
+  file       File      @relation(fields: [file_id], references: [id])
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
+}
+
+model Notes {
+  id         String    @id @default(cuid()) @map("_id")
+  content    String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
+  file_id    String
 }

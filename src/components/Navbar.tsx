@@ -6,6 +6,7 @@ import Button from "./button"
 import ThemeToggle from "./themeToggle/ThemeToggle"
 import { ThemeContext } from '@/context/ThemeContext'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import Image from 'next/image'
 
 const Navbar = () => {
   const router = useRouter()
@@ -39,12 +40,14 @@ const Navbar = () => {
 
   return (
     <div className={`p-3 flex justify-between items-center shadow-lg`}>
+      <div className='flex flex-row gap-2'>
       <div onClick={goHome} className='md:block hidden text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
         Research Buddy
-      </div>      
-      <div onClick={goHome} className='md:hidden block text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
-        📜
+      </div>  
+      <div onClick={goHome} className='text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
+        <Image src="/rb.jpg" alt='' width={40} height={40} className='rounded-lg'/>
       </div>
+      </div>    
       
       {status === "authenticated" &&
         <div className='flex items-center gap-4'>

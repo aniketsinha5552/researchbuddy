@@ -30,7 +30,7 @@ const Dashboard = () => {
 
   const router = useRouter()
   return (
-    <div className="flex flex-row flex-wrap gap-8 justify-start">
+    <div className="flex flex-row flex-wrap gap-8 justify-start p-4">
     <Card>
       <FileUpload getFiles={getFiles}/>
     </Card>

@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from 'react'
 import Button from "./button"
 import ThemeToggle from "./themeToggle/ThemeToggle"
 import { ThemeContext } from '@/context/ThemeContext'
+import { Icon } from '@iconify/react/dist/iconify.js'
 
 const Navbar = () => {
   const router = useRouter()
@@ -38,8 +39,11 @@ const Navbar = () => {
 
   return (
     <div className={`p-3 flex justify-between items-center shadow-lg`}>
-      <div onClick={goHome} className='text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
+      <div onClick={goHome} className='md:block hidden text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
         Research Buddy
+      </div>      
+      <div onClick={goHome} className='md:hidden block text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
+        📜
       </div>
       
       {status === "authenticated" &&
@@ -47,9 +51,9 @@ const Navbar = () => {
           <ThemeToggle/>
           <span className='hidden sm:inline'>{data?.user?.name}</span>
           <img className='w-10 h-10 rounded-full' src={data?.user?.image ?? ""} alt='user' />
-          <Button type='primary' onClick={logout}>
-            Logout
-          </Button>
+          <button onClick={logout} title='Logout'>
+            <Icon icon="material-symbols:logout-sharp" style={{fontSize:30}}/>
+          </button>
         </div>
       }
       {status === "unauthenticated" && pathname == "/" &&

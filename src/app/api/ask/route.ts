@@ -34,6 +34,6 @@ export const POST = async(req: Request,res: Response)=>{
           return NextResponse.json(ans)
 
      }catch(e:any){
-          return NextResponse.json({error:e.message},{status:404})
+          return NextResponse.json({error:"Something went wrong. Please try again."},{status:404})
      }
 }

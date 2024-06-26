@@ -30,7 +30,7 @@ const Dashboard = () => {
 
   const router = useRouter()
   return (
-    <div className="flex flex-row flex-wrap gap-8">
+    <div className="flex flex-row flex-wrap gap-8 justify-start">
     <Card>
       <FileUpload getFiles={getFiles}/>
     </Card>
@@ -38,7 +38,7 @@ const Dashboard = () => {
          return(
             <div onClick={()=>router.push(`/file/${file.id}`)} key={file.id}>
             <Card >
-               <p className="text-bold text-2xl max-w-96 overflow-hidden break-words">{file?.name.substring(0,60)}</p>
+               <p className="text-bold text-xl max-w-96 overflow-hidden break-words">{file?.name.substring(0,60)}</p>
                <p className="text-md text-slate-500">Created At: {new Date(file.created_at).toDateString()}</p>
                <button onClick={((e)=>deleteFile(e,file.id))} className="absolute cursor-pointer hover:bg-red-200 bottom-1 right-1"><Icon style={{fontSize:"2rem"}} icon="ic:baseline-delete" /></button> 
             </Card>

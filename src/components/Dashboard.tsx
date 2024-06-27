@@ -43,7 +43,7 @@ const Dashboard = () => {
   const router = useRouter();
 
   return (
-    <div className="p-4">
+    <div className="p-4 min-h-screen">
       <div className="md:text-3xl text-2xl text-bold text-center mb-10">
         Upload & Start Interacting with Your Files
       </div>

@@ -57,9 +57,9 @@ const File = ({ params }: any) => {
   }
 
   return (
-    <div >
-      <div className='flex flex-row justify-center gap-2 p-5'>
-        <h1 className='text-2xl mt-2 text-center'>{file?.name}</h1>
+    <div className='min-h-screen'>
+      <div className='flex flex-row justify-center gap-2 p-1'>
+        <h1 className='text-2xl mt-1 text-center'>{file?.name}</h1>
       </div>
 
 

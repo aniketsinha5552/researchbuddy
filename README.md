@@ -8,6 +8,8 @@
 - Langchain
 - OpenAI embeddings
 - Tailwind CSS
+- React Hook Form
+- Material UI
 
 
 ## Class Diagram

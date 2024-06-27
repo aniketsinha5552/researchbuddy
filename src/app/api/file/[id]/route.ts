@@ -1,8 +1,13 @@
+import { getAuthSession } from "@/utils/auth"
 import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
 
 let prisma = new PrismaClient()
-export const GET = async(req,{params})=>{
+export const GET = async(req:Request,{params}:any)=>{
+    const session = await getAuthSession()
+    if(!session){
+        return NextResponse.json({error: "Unauthorized"}, {status: 401})
+    }
     const {id} = params
     try{
         const file = await prisma.file.findFirst({
@@ -13,14 +18,17 @@ export const GET = async(req,{params})=>{
         await prisma.$disconnect()
         return new NextResponse(JSON.stringify(file))
 
-    }catch(e){
+    }catch(e:any){
         return NextResponse.json({error:e.message},{status:400})
     }
 }
 
 
-export const POST = async(req,{params})=>{
-    // return NextResponse.json({message:"File deleted successfully"},{status:200})
+export const POST = async(req:Request,{params}:any)=>{
+    const session = await getAuthSession()
+    if(!session){
+        return NextResponse.json({error: "Unauthorized"}, {status: 401})
+    }
     const {id} = params
     try{
         const message = await prisma.message.deleteMany({
@@ -36,7 +44,7 @@ export const POST = async(req,{params})=>{
         await prisma.$disconnect()
         return NextResponse.json({message:"File deleted successfully"},{status:200})
 
-    }catch(e){
+    }catch(e:any){
         return NextResponse.json({error:e.message},{status:400})
     }
 }

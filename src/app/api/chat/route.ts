@@ -1,10 +1,14 @@
+import { getAuthSession } from "@/utils/auth"
 import { PrismaClient } from "@prisma/client"
-import { error } from "console"
 import { NextResponse } from "next/server"
 
 let prisma = new PrismaClient()
 
 export const GET=async(req:Request,res:Response)=>{
+  const session = await getAuthSession()
+  if(!session){
+      return NextResponse.json({error: "Unauthorized"}, {status: 401})
+  }
     const {searchParams} = new URL(req.url)
 
     let fileId = searchParams.get("fileId")??""

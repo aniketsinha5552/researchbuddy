@@ -1,11 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { GetTextFromPDF } from "../../../utils/textExtractor";
 import { NextResponse } from "next/server";
+import { getAuthSession } from "@/utils/auth";
 
-export const GET = async (req, { params }) => {
+export const GET = async (req:Request, { params }:any) => {
+    const session = await getAuthSession()
+    if(!session){
+        return NextResponse.json({error: "Unauthorized"}, {status: 401})
+    }
     // console.log(req.URL)
     const {searchParams} = new URL(req.url)
-    const id = searchParams.get("id") 
+    const id:any = searchParams.get("id") 
     
     let prisma = new PrismaClient();
     

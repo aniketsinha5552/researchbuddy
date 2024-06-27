@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server";
 import {standAlone} from "../../../utils/standalone_query"
 import { PrismaClient } from "@prisma/client";
+import { getAuthSession } from "@/utils/auth";
 
 
 export const POST = async(req: Request,res: Response)=>{
+     const session = await getAuthSession()
+     if(!session){
+         return NextResponse.json({error: "Unauthorized"}, {status: 401})
+     }
      const body = await req.json();
 
      let prisma = new PrismaClient()

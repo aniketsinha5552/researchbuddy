@@ -67,7 +67,7 @@ const Dashboard = () => {
                       e.stopPropagation();
                       handleClickOpen(file.id);
                     }}
-                    className="absolute cursor-pointer hover:bg-red-200 bottom-1 right-1"
+                    className="absolute cursor-pointer hover:bg-red-700 rounded bottom-1 right-1"
                   >
                     <Icon style={{ fontSize: "2rem" }} icon="ic:baseline-delete" />
                   </button>

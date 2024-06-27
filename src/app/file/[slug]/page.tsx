@@ -91,7 +91,7 @@ const File = ({ params }: any) => {
                 >
                   <Icon icon="line-md:loading-loop" />
                 </button> :
-            <button className={`bg-blue-500 rounded-md m-2 p-2`} onClick={analyze}>Analyze</button> }
+            <button className={`bg-blue-500 rounded-md m-2 p-2`} onClick={analyze}>Analyze 🪄</button> }
             </div>
             : <Chatbox slug={slug} file={file} /> }
             </div>

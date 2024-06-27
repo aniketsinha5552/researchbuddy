@@ -1,17 +1,24 @@
 'use client'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useContext, useEffect } from 'react'
-import Button from "./button"
+import React, { useContext, useEffect, useState } from 'react'
 import ThemeToggle from "./themeToggle/ThemeToggle"
 import { ThemeContext } from '@/context/ThemeContext'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Image from 'next/image'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
 
 const Navbar = () => {
   const router = useRouter()
   const {theme}= useContext(ThemeContext)
   const { data, status } = useSession()
+  const [open,setOpen] = useState<boolean>(false);
+  const handleClose = ()=>{
+    setOpen(false)
+  }
+  const handleOpen = ()=>{
+    setOpen(true)
+  }
 
   const pathname = usePathname()
   // console.log(pathname)
@@ -54,7 +61,7 @@ const Navbar = () => {
           <ThemeToggle/>
           <span className='hidden sm:inline'>{data?.user?.name}</span>
           <img className='w-10 h-10 rounded-full' src={data?.user?.image ?? ""} alt='user' />
-          <button onClick={logout} title='Logout'>
+          <button onClick={handleOpen} title='Logout'>
             <Icon icon="material-symbols:logout-sharp" style={{fontSize:30}}/>
           </button>
         </div>
@@ -75,6 +82,22 @@ const Navbar = () => {
         </button>
         </div>
       }
+       <Dialog open={open} onClose={handleClose}>
+        {/* <DialogTitle>{"Confirm Deletion"}</DialogTitle> */}
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to logout?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={logout} color="secondary" autoFocus>
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }

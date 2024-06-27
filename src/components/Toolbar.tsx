@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { usePathname } from "next/navigation";
+import { toast } from "react-toastify";
 
 type Props = {
   editor: Editor | null;
@@ -29,11 +30,14 @@ const Toolbar = ({ editor, content }: Props) => {
   if (!editor) {
     return null;
   }
+
+  const notify = () => toast("Notes saved!")
   const onSave = async()=>{
     let res = await axios.post("/api/notes",{
       fileId: fileId,
       content: content
     })
+    notify()
   }
   return (
     <div
@@ -189,7 +193,7 @@ const Toolbar = ({ editor, content }: Props) => {
       {content && (
         <button
           type="button"
-          className="px-4 bg-sky-700 text-white py-2 rounded-md"
+          className="px-4 bg-sky-700 hover:bg-sky-800 text-white py-2 rounded-md"
           onClick={onSave}
         >
           Save

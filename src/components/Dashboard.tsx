@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const getFiles = async () => {
     let res = await axios.get("/api/files");
-    console.log(res.data.files);
+   //  console.log(res.data.files);
     setFiles(res.data.files);
   };
 

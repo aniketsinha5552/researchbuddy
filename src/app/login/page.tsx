@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 const LoginPage = () => {
   const {data,status}= useSession()
-  console.log(data,status)
+  // console.log(data,status)
 
   const [isLogin, setIsLogin] = useState(true);
 

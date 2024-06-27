@@ -24,12 +24,11 @@ type Props = {
 };
 
 const Toolbar = ({ editor, content }: Props) => {
+  const pathname = usePathname()
+  const fileId = pathname.split("/")[2]
   if (!editor) {
     return null;
   }
-
-  const pathname = usePathname()
-  const fileId = pathname.split("/")[2]
   const onSave = async()=>{
     let res = await axios.post("/api/notes",{
       fileId: fileId,

@@ -18,12 +18,14 @@ const File = ({ params }: any) => {
   const [text, setText] = useState<string>("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-
+  const [editMode,setEditMode] = useState(false)
+  const [fileName,setFileName]= useState("")
   const [tab, setTab] = useState("chat")
 
   const getFile = async () => {
     let res = await axios.get(`/api/file/${slug}`)
     setFile(res.data)
+    setFileName(res.data.name)
     // generateText(res?.data?.id)
   }
 
@@ -56,11 +58,47 @@ const File = ({ params }: any) => {
 
   }
 
+  const onSave =async()=>{
+    try{
+      let res = await axios.post("/api/updateFile",{
+        name: fileName,
+        fileId: slug
+      })
+      setEditMode(false)
+      getFile()
+    }catch(e:any){
+    }
+  }
+
+  const onChange= (e:any)=>{
+    setFileName(e.target.value)
+  }
+
+  const onCancel=(e:any)=>{
+    setEditMode(false)
+    setFileName(file.name)
+  }
+
   return (
     <div className='min-h-screen'>
-      <div className='flex flex-row justify-center gap-2 p-1'>
-        <h1 className='text-2xl mt-1 text-center'>{file?.name}</h1>
+      {file &&
+      <div className='flex flex-row justify-center items-center gap-2 p-1'>
+        {editMode== true? 
+        <div className='flex flex-row items-center gap-2'>
+          <input onChange={onChange} className='p-1 border-2 bg-transparent border-gray-200 rounded-sm text-2xl mt-1 text-center' value={fileName}/>
+          <button className=' rounded p-1 border-2 border-gray-200' onClick={onSave}>Save</button>
+          <button className=' rounded p-1 border-2 border-gray-200' onClick={onCancel}>Cancel</button>
+        </div>
+        :
+        <>
+        <h1 className='text-2xl mt-1 text-center'>{fileName}</h1>
+        <button onClick={()=>setEditMode(true)}>
+        <Icon style={{fontSize:24}} icon="material-symbols-light:edit-outline" />
+        </button>
+        </>
+        }
       </div>
+      }
 
 
       {file &&

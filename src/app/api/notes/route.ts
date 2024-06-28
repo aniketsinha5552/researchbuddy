@@ -18,6 +18,9 @@ export const GET = async (req: Request, res: Response) => {
         file_id: fileId
       }
     })
+    if(!note){
+      return NextResponse.json({content: "Start taking notes"})
+    }
     prisma.$disconnect()
     return NextResponse.json(note)
   } catch (e) {

@@ -33,11 +33,16 @@ const Toolbar = ({ editor, content }: Props) => {
 
   const notify = () => toast("Notes saved!")
   const onSave = async()=>{
-    let res = await axios.post("/api/notes",{
-      fileId: fileId,
-      content: content
-    })
-    notify()
+    try{
+      let res = await axios.post("/api/notes",{
+        fileId: fileId,
+        content: content
+      })
+      notify()
+    }catch(e:any){
+      console.log(e.message)
+    }
+
   }
   return (
     <div

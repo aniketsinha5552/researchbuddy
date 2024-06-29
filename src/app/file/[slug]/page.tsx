@@ -11,6 +11,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import { motion } from 'framer-motion'
 
 const File = ({ params }: any) => {
 
@@ -114,9 +115,17 @@ const File = ({ params }: any) => {
             </div>
           </div>
           <div className='flex-1 overflow-hidden'>
-            <div className='flex flex-row justify-around border-2 border-slate-400 rounded-sm'>
-              <button className={`flex-1 p-2 ${tab == "chat" && 'bg-slate-400'}`} onClick={() => setTab("chat")}>Chat</button>
-              <button className={`flex-1 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</button>
+            <div className='flex flex-row gap-1 justify-around rounded-sm'>
+              <motion.button
+                  // whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+               className={`flex-1 rounded-md p-2 border-2 border-slate-400 ${tab == "chat" && 'bg-slate-400'}`} onClick={() => setTab("chat")}>Chat</motion.button>
+              <motion.button
+                          //  whileHover={{ scale: 1.05 }}
+                           whileTap={{ scale: 0.95 }}
+                           transition={{ type: "spring", stiffness: 300 }}
+               className={`flex-1 rounded-md border-2 border-slate-400 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</motion.button>
             </div>
             {tab == "chat" ?
               <div>

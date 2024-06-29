@@ -6,6 +6,7 @@ import { File, Message } from '@prisma/client'
 import { ThemeContext } from '@/context/ThemeContext'
 import MessageComp from './MessageComp'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import Loading from './Loading'
 
 
 const Chatbox = ({ slug, file }: {
@@ -57,24 +58,25 @@ const Chatbox = ({ slug, file }: {
         question: ques,
         fileId: slug
       })
-      setChat((prev: Message[]) => [...prev, {
-        text: res.data,
-        type: "BOT"
-      }])
-
-
-      let res2 = await axios.post("/api/chat", {
+     
+      await axios.post("/api/chat", {
         fileId: slug,
         message: ques,
         type: "USER"
       })
 
-      let res3 = await axios.post("/api/chat", {
+      await axios.post("/api/chat", {
         fileId: slug,
         message: res.data,
         type: "BOT"
       })
-    } catch (e:any) {
+
+      setChat((prev: any) => [...prev, {
+        text: res.data,
+        type: "BOT"
+      }])
+
+    } catch (e: any) {
       alert(e.message)
     } finally {
       setIsloading(false)
@@ -87,9 +89,9 @@ const Chatbox = ({ slug, file }: {
     <div className="flex flex-col items-center py-2 flex-1 overflow-hidden">
       <div className={`w-full max-w-full rounded-lg shadow-md p-4 ${theme == "dark" ? 'bg-slate-800' : 'bg-slate-300'}`}>
         <div ref={chatContainerRef} className="mb-4 space-y-2 min-h-[60vh] max-h-[60vh] overflow-y-auto overflow-x-hidden p-2">
-          {chat.length > 0 && chat.map((message: Message, idx: number) => (
+          {chat.length > 0 ? chat.map((message: Message, idx: number) => (
             <MessageComp message={message} key={idx} />
-          ))}
+          )): <Loading/>}
         </div>
         <form onSubmit={askQuestion} className="flex items-center">
           <input
@@ -105,7 +107,7 @@ const Chatbox = ({ slug, file }: {
               // onClick={askQuestion}
               disabled={true}
             >
-              <Icon icon="line-md:loading-loop" />
+              <Icon style={{fontSize:20}} icon="line-md:loading-loop" />
             </button> :
 
             <button

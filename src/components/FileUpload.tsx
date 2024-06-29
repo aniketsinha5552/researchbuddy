@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 
 const FileUpload = ({ getFiles }: {
@@ -12,6 +13,7 @@ const FileUpload = ({ getFiles }: {
   const [file, setFile] = useState<any>(null);
   const [error, setError] = useState('');
   const [disableUpload, setDisableUpload] = useState(true)
+  const [isUploading, setIsUploading] = useState(false)
 
   const notify = () => toast("File uploaded successfully");
 
@@ -42,6 +44,7 @@ const FileUpload = ({ getFiles }: {
       setError('No file selected');
       return;
     }
+    setIsUploading(true)
     setDisableUpload(true)
 
     const formData = new FormData();
@@ -77,6 +80,7 @@ const FileUpload = ({ getFiles }: {
 
         console.log('File uploaded successfully:', response.data);
         getFiles()
+        notify()
       } catch (e: any) {
         console.log(e)
       }
@@ -87,15 +91,17 @@ const FileUpload = ({ getFiles }: {
       }
 
       // setDisableUpload(false)
-      notify()
+      
 
     } catch (error) {
       console.error('Error uploading file', error);
       setError('Error uploading file');
+    } finally {
+      setIsUploading(false)
     }
   };
 
-  const removeFile=()=>{
+  const removeFile = () => {
     setFile(null)
     setDisableUpload(true)
     if (fileRef.current) {
@@ -107,28 +113,38 @@ const FileUpload = ({ getFiles }: {
 
 
   return (
-    <div className="p-6 rounded-lg shadow-md">
+    <div className="p-6 rounded-lg">
+      <div className='flex flex-row'>
       <input
         type="file"
         ref={fileRef}
         id="file"
-        className="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+        className="block p-2 rounded-md bg-gray-100 w-full text-sm text-gray-900 border border-gray-300 cursor-pointer focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
         onChange={handleFileChange}
       />
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-      <button
-        className={`mt-4 w-full px-4 py-2 text-white ${disableUpload ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} rounded-lg focus:outline-none`}
-        onClick={handleUpload}
-        disabled={disableUpload}
-      >
-        Upload
-      </button>
-      {!disableUpload && <button
-        className={`mt-4 w-full px-4 py-2 bg-red-500 rounded-lg focus:outline-none`}
+        {!disableUpload && <button
+        className="cursor-pointer"
         onClick={removeFile}
       >
-        Remove
+        <Icon icon="ic:round-cancel" />
       </button>}
+      </div>
+
+      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      {isUploading ?
+        <button
+          className={`mt-4 w-full px-4 py-2 text-white flex justify-center bg-green-500 hover:bg-green-600 rounded-lg focus:outline-none`}
+        >
+          <Icon style={{ fontSize: 30  }} icon="line-md:uploading-loop" />
+        </button>
+        :
+        <button
+          className={`mt-4 w-full px-4 py-2 text-white ${disableUpload ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} rounded-lg focus:outline-none`}
+          onClick={handleUpload}
+          disabled={disableUpload}
+        >
+          Upload
+        </button>}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client"
 import Chatbox from '@/components/Chatbox'
 import Loading from '@/components/Loading'
+import Loading2 from '@/components/Loading2'
 import Notes from '@/components/Notes'
 import PdfViewer from '@/components/PdfViewer'
 import Button from '@/components/button'
@@ -19,8 +20,8 @@ const File = ({ params }: any) => {
   const [text, setText] = useState<string>("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  const [editMode,setEditMode] = useState(false)
-  const [fileName,setFileName]= useState("")
+  const [editMode, setEditMode] = useState(false)
+  const [fileName, setFileName] = useState("")
   const [tab, setTab] = useState("chat")
 
   const getFile = async () => {
@@ -46,36 +47,36 @@ const File = ({ params }: any) => {
 
   const analyze = async () => {
     setLoading(true)
-    try{
+    try {
       await axios.post("/api/embed", {
         fileId: slug
       })
       notify()
       getFile()
-    }catch(e){
+    } catch (e) {
       alert("Ran into some error. Please try again")
       setLoading(false)
     }
 
   }
 
-  const onSave =async()=>{
-    try{
-      let res = await axios.post("/api/updateFile",{
+  const onSave = async () => {
+    try {
+      let res = await axios.post("/api/updateFile", {
         name: fileName,
         fileId: slug
       })
       setEditMode(false)
       getFile()
-    }catch(e:any){
+    } catch (e: any) {
     }
   }
 
-  const onChange= (e:any)=>{
+  const onChange = (e: any) => {
     setFileName(e.target.value)
   }
 
-  const onCancel=(e:any)=>{
+  const onCancel = (e: any) => {
     setEditMode(false)
     setFileName(file.name)
   }
@@ -83,22 +84,22 @@ const File = ({ params }: any) => {
   return (
     <div className='min-h-screen'>
       {file &&
-      <div className='flex flex-row justify-center items-center gap-2 p-1'>
-        {editMode== true? 
-        <div className='flex flex-row items-center gap-2'>
-          <input onChange={onChange} className='p-1 border-2 bg-transparent border-gray-200 rounded-sm text-2xl mt-1 text-center' value={fileName}/>
-          <button className=' rounded p-1 border-2 border-gray-200' onClick={onSave}>Save</button>
-          <button className=' rounded p-1 border-2 border-gray-200' onClick={onCancel}>Cancel</button>
+        <div className='flex flex-row justify-center items-center gap-2 p-1'>
+          {editMode == true ?
+            <div className='flex flex-row items-center gap-2'>
+              <input onChange={onChange} className='p-1 border-2 bg-transparent border-gray-200 rounded-sm text-2xl mt-1 text-center' value={fileName} />
+              <button className=' rounded p-1 border-2 border-gray-200' onClick={onSave}>Save</button>
+              <button className=' rounded p-1 border-2 border-gray-200' onClick={onCancel}>Cancel</button>
+            </div>
+            :
+            <>
+              <h1 className='text-2xl mt-1 text-center'>{fileName}</h1>
+              <button onClick={() => setEditMode(true)}>
+                <Icon style={{ fontSize: 24 }} icon="material-symbols-light:edit-outline" />
+              </button>
+            </>
+          }
         </div>
-        :
-        <>
-        <h1 className='text-2xl mt-1 text-center'>{fileName}</h1>
-        <button onClick={()=>setEditMode(true)}>
-        <Icon style={{fontSize:24}} icon="material-symbols-light:edit-outline" />
-        </button>
-        </>
-        }
-      </div>
       }
 
 
@@ -118,23 +119,19 @@ const File = ({ params }: any) => {
               <button className={`flex-1 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</button>
             </div>
             {tab == "chat" ?
-            <div>
-            {file.embed == false ?
-            <div className='m-2 p-2 text-center'> 
-            <p>Analyze the document to chat</p>
-            {loading?
-                <button
-                  className="bg-blue-500 rounded-md m-2 p-2"
-                  // onClick={askQuestion}
-                  disabled={true}
-                >
-                  <Icon icon="line-md:loading-loop" />
-                </button> :
-            <button className={`bg-blue-500 rounded-md m-2 p-2`} onClick={analyze}>Analyze 🪄</button> }
-            </div>
-            : <Chatbox slug={slug} file={file} /> }
-            </div>
-             :
+              <div>
+                {file.embed == false ?
+                  <div className='m-2 p-2 text-center'>
+                    {loading ?
+                      <Loading2 /> :
+                      <div className='min-h-[60vh] flex flex-col justify-center items-center'>
+                        <p>Analyze the document to chat</p>
+                        <button className={`bg-blue-500 rounded-md m-2 p-2`} onClick={analyze}>Analyze 🪄</button>
+                      </div>}
+                  </div>
+                  : <Chatbox slug={slug} file={file} />}
+              </div>
+              :
               <Notes />
             }
           </div>
@@ -142,7 +139,7 @@ const File = ({ params }: any) => {
         </div>
       }
       {
-        !file && <Loading/>
+        !file && <Loading />
       }
 
     </div>

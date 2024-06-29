@@ -18,7 +18,12 @@ export const GET = async(req:Request,res:Response)=>{
                 user : {
                     email: email
                 }
-            }
+            },
+            orderBy:[
+                {
+                    created_at: "desc"
+                }
+            ]
         })
         return new NextResponse(JSON.stringify({files: files}))
     }catch(e:any){

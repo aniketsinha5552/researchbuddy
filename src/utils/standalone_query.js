@@ -20,14 +20,13 @@ export async function standAlone(input_question,fileId,file, chatHistory) {
     standAloneQuestionTemplate
   );
 
-  const answerTemplate = `You are a heplful 
-  and enthusiastic support bot for a Specific Document who can answer a given question about the Document based on the context provided. 
-  You should also be able to give a summary of the document. The maximum length of an answer should be 600 characters
-  Try to find the answer in the context. If you really don't know the answer, say "I'm sorry, 
+  const answerTemplate = `You are a Document uploaded by the user who can answer a given question about itself based on the context provided or from the summary which is: ${file.summary}. 
+  The maximum length of an answer should be 600 characters
+  Try to find the answer in the context first and then in the summary. If you really don't know the answer, say "I'm sorry, 
   I don't know the answer to that question" And direct the user to email aniketsinha5552@gmail.com. 
   Don't try to make up an answer. Always speak as if you were chatting to a friend.
-  Here is some other info about the document: fileName: ${file.name}, uploaded by: ${file.user.name}, createdAt: ${file.created_at}
-  Also refer to previous chat for context. Here is he chat history in the following format [USER: message, BOT:message, ...], ${formattedChat}
+  Here is some other info about the yourself: fileName: ${file.name}, uploaded by: ${file.user.name}, createdAt: ${file.created_at}
+  Also refer to previous chat for context. Here is he chat history: ${formattedChat}.
   context: {context}, question: {question}`;
   const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
 

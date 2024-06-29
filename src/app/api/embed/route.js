@@ -5,6 +5,7 @@ import {SupabaseVectorStore} from "langchain/vectorstores/supabase"
 import  {OpenAIEmbeddings} from "langchain/embeddings/openai";
 import { PrismaClient } from "@prisma/client";
 import { GetTextFromPDF } from "@/utils/textExtractor";
+import { summary } from "@/utils/summary";
 
 export const POST = async(req,res)=>{
     const body = await req.json()
@@ -28,9 +29,14 @@ export const POST = async(req,res)=>{
 
     let url = file.url;
     let text = await GetTextFromPDF(url)  
+
     if(text.length> 5000){
       text = text.substring(1,10000)
     }
+
+    let sum = ""
+    sum = await summary(text)
+
     const data = await splitter(text)
 
     const sbAPIKey = process.env.SUPABASE_KEY;
@@ -65,7 +71,8 @@ export const POST = async(req,res)=>{
           id: fileId
         },
         data:{
-          embed: true
+          embed: true,
+          summary: sum
         }
       })
     

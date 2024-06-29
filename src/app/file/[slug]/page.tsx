@@ -1,5 +1,6 @@
 "use client"
 import Chatbox from '@/components/Chatbox'
+import Loading from '@/components/Loading'
 import Notes from '@/components/Notes'
 import PdfViewer from '@/components/PdfViewer'
 import Button from '@/components/button'
@@ -105,7 +106,7 @@ const File = ({ params }: any) => {
         <div className='p-3 flex flex-col md:flex-row'>
 
           <div className='flex-1 w-full'>
-            <div className={`p-5 m-2 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black rounded-md`}>
+            <div className={`p-0 m-1 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black rounded-md`}>
               {/* {loading ? <>...Parsing Text</> : <>{text}</>}
               {error && <p className='text-red-500'>Error Parsing Text</p>} */}
               <PdfViewer fileUrl={file.url} />
@@ -139,6 +140,9 @@ const File = ({ params }: any) => {
           </div>
           <ToastContainer />
         </div>
+      }
+      {
+        !file && <Loading/>
       }
 
     </div>

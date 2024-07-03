@@ -113,7 +113,7 @@ const File = ({ params }: any) => {
       <div className='flex flex-row justify-center'>
 
 
-      <Select value={view} label="View" onChange={(e:any)=>setView(e.target.value)}>
+      <Select style={{color:"gray"}} value={view} label="View" onChange={(e:any)=>setView(e.target.value)}>
         <MenuItem value={0}>View PDF & Chat</MenuItem>
         <MenuItem value={1}>View PDF Only</MenuItem>
         <MenuItem value={2}>View Chat Only</MenuItem>

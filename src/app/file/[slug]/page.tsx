@@ -12,6 +12,7 @@ import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { motion } from 'framer-motion'
+import { MenuItem, Select, TextField } from '@mui/material'
 
 const File = ({ params }: any) => {
 
@@ -24,6 +25,7 @@ const File = ({ params }: any) => {
   const [editMode, setEditMode] = useState(false)
   const [fileName, setFileName] = useState("")
   const [tab, setTab] = useState("chat")
+  const [view,setView] = useState(0) // 1: show pdf, 2: show chat, 0: show both
 
   const getFile = async () => {
     let res = await axios.get(`/api/file/${slug}`)
@@ -108,18 +110,33 @@ const File = ({ params }: any) => {
         </div>
       }
 
+      <div className='flex flex-row justify-center'>
+
+
+      <Select value={view} label="View" onChange={(e:any)=>setView(e.target.value)}>
+        <MenuItem value={0}>View PDF & Chat</MenuItem>
+        <MenuItem value={1}>View PDF Only</MenuItem>
+        <MenuItem value={2}>View Chat Only</MenuItem>
+
+      </Select>
+      </div>
+
 
       {file &&
         <div className='p-5 flex flex-col md:flex-row'>
 
-          <div className='flex-1 w-full'>
+           {/* Left */}
+
+          <div className={`flex-1 w-full ${view==2 && 'hidden'}`}>
             <div className={`p-0 m-1 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black rounded-md`}>
               {/* {loading ? <>...Parsing Text</> : <>{text}</>}
               {error && <p className='text-red-500'>Error Parsing Text</p>} */}
               <PdfViewer fileUrl={file.url} />
             </div>
           </div>
-          <div className='flex-1 overflow-hidden'>
+
+          {/* Right */}
+          <div className={`flex-1 overflow-hidden ${view==1 && 'hidden'}`}>
             <div className='flex flex-row gap-1 justify-around rounded-sm'>
               <motion.button
                   // whileHover={{ scale: 1.05 }}

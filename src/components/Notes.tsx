@@ -26,8 +26,8 @@ const Notes = () => {
 
 
     return (
-        <div className="flex flex-col items-center min-h-[60vh] max-h-[60vh] py-2 flex-1">
-            <div className={`w-full max-w-full min-h-[80vh] rounded-lg shadow-md p-4 ${theme == "dark" ? 'bg-slate-800' : 'bg-slate-300'}`}>
+        <div className="flex flex-col items-center min-h-[80vh] max-h-[80vh] py-2 flex-1 ">
+            <div className={`overflow-y-auto w-full max-w-full min-h-[70vh] rounded-lg shadow-md p-4 ${theme == "dark" ? 'bg-slate-800' : 'bg-slate-300'}`}>
             {content ? <Tiptap
             content={content}
             onChange={(newContent: string) => handleContentChange(newContent)}

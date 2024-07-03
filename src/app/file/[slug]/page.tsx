@@ -85,27 +85,32 @@ const File = ({ params }: any) => {
   return (
     <div className='min-h-screen'>
       {file &&
-        <div className='flex flex-row justify-center items-center gap-2 p-1'>
+        <div className='flex flex-col justify-center items-center gap-2 '>
           {editMode == true ?
-            <div className='flex flex-row items-center gap-2'>
-              <input onChange={onChange} className='p-1 border-2 bg-transparent border-gray-200 rounded-sm text-2xl mt-1 text-center' value={fileName} />
-              <button className=' rounded p-1 border-2 border-gray-200' onClick={onSave}>Save</button>
-              <button className=' rounded p-1 border-2 border-gray-200' onClick={onCancel}>Cancel</button>
+            <div className='flex  flex-col md:flex-row items-center gap-2'>
+              <input onChange={onChange} className='p-1 border-2 bg-transparent border-gray-200 rounded-sm text-xl md:text-2xl mt-1 text-center' value={fileName} />
+              <button className='rounded p-1 border-2 border-gray-200' onClick={onSave}>Save</button>
+              <button className='rounded p-1 border-2 border-gray-200' onClick={onCancel}>Cancel</button>
             </div>
             :
-            <>
-              <h1 className='text-2xl mt-1 text-center'>{fileName}</h1>
+            <div className='flex flex-col md:flex-row items-center gap-2'>
+              <h1 className='text-xl font-bold md:text-2xl mt-4 text-center px-4'>{fileName}</h1>
               <button onClick={() => setEditMode(true)}>
                 <Icon style={{ fontSize: 24 }} icon="material-symbols-light:edit-outline" />
               </button>
-            </>
+            </div>
           }
+          {file.embed== true && 
+          <div className='px-3 m-2'>
+            <h2 className='text-xl'>About</h2>
+            <p className='text-lg italic'>{file.summary}</p>
+          </div>}
         </div>
       }
 
 
       {file &&
-        <div className='p-3 flex flex-col md:flex-row'>
+        <div className='p-5 flex flex-col md:flex-row'>
 
           <div className='flex-1 w-full'>
             <div className={`p-0 m-1 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black rounded-md`}>

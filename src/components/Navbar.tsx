@@ -46,7 +46,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className={`p-3 flex justify-between items-center shadow-lg`}>
+    <div className={`p-4 flex justify-between items-center shadow-lg`}>
       <div className='flex flex-row gap-2'>
       <div onClick={goHome} className='md:block hidden text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
         Research Buddy

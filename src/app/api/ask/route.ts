@@ -3,7 +3,7 @@ import {standAlone} from "../../../utils/standalone_query"
 import { PrismaClient } from "@prisma/client";
 import { getAuthSession } from "@/utils/auth";
 
-export const maxDuration = 30; // This function can run for a maximum of 5 seconds
+export const maxDuration = 30; // This function can run for a maximum of 30 seconds
 export const dynamic = 'force-dynamic';
 
 

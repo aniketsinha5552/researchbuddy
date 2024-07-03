@@ -7,7 +7,7 @@ import { PrismaClient } from "@prisma/client";
 import { GetTextFromPDF } from "@/utils/textExtractor";
 import { summary } from "@/utils/summary";
 
-export const maxDuration = 60; // This function can run for a maximum of 5 seconds
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds
 export const dynamic = 'force-dynamic';
 
 export const POST = async(req,res)=>{

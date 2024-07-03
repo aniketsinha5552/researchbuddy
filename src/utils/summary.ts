@@ -8,7 +8,7 @@ export async function summary(text:string){
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: `Summarize the following text within 200 words: ${text}.` }],
+            messages: [{ role: "user", content: `Give a meaningful summary of the following text within 300 words. Following is the text : ${text}.` }],
             max_tokens: 100,
           }),
         });

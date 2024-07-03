@@ -13,9 +13,14 @@ const Dashboard = () => {
   const [selectedFileId, setSelectedFileId] = useState("");
 
   const getFiles = async () => {
-    let res = await axios.get("/api/files");
-   //  console.log(res.data.files);
-    setFiles(res.data.files);
+    try{
+      let res = await axios.get("/api/files");
+      //  console.log(res.data.files);
+       setFiles(res.data.files);
+    }catch(e:any){
+      //  
+    }
+
   };
 
   useEffect(() => {

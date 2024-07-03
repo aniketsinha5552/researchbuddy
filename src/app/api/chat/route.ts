@@ -19,7 +19,10 @@ export const GET=async(req:Request,res:Response)=>{
         let messages = await prisma.message.findMany({
             where:{
                 file_id: fileId
-            }
+            },
+            orderBy:{
+              created_at: "asc"
+         }
         })
         await prisma.$disconnect()
         return NextResponse.json(messages)

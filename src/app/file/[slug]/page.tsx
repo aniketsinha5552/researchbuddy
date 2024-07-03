@@ -25,7 +25,7 @@ const File = ({ params }: any) => {
   const [editMode, setEditMode] = useState(false)
   const [fileName, setFileName] = useState("")
   const [tab, setTab] = useState("chat")
-  const [view,setView] = useState(0) // 1: show pdf, 2: show chat, 0: show both
+  const [view, setView] = useState(0) // 1: show pdf, 2: show chat, 0: show both
 
   const getFile = async () => {
     let res = await axios.get(`/api/file/${slug}`)
@@ -102,32 +102,33 @@ const File = ({ params }: any) => {
               </button>
             </div>
           }
-          {file.embed== true && 
-          <div className='px-3 m-2'>
-            <h2 className='text-xl'>About</h2>
-            <p className='text-lg italic'>{file.summary}</p>
-          </div>}
+          {file.embed == true &&
+            <div className='px-3 m-2'>
+              <h2 className='text-xl'>About</h2>
+              <p className='text-lg italic'>{file.summary}</p>
+            </div>}
         </div>
       }
 
       <div className='flex flex-row justify-center'>
 
+        {file &&
+          <Select style={{ color: "gray" }} value={view} label="View" onChange={(e: any) => setView(e.target.value)}>
+            <MenuItem value={0}>View PDF & Chat</MenuItem>
+            <MenuItem value={1}>View PDF Only</MenuItem>
+            <MenuItem value={2}>View Chat Only</MenuItem>
 
-      <Select style={{color:"gray"}} value={view} label="View" onChange={(e:any)=>setView(e.target.value)}>
-        <MenuItem value={0}>View PDF & Chat</MenuItem>
-        <MenuItem value={1}>View PDF Only</MenuItem>
-        <MenuItem value={2}>View Chat Only</MenuItem>
-
-      </Select>
+          </Select>
+        }
       </div>
 
 
       {file &&
         <div className='p-5 flex flex-col md:flex-row'>
 
-           {/* Left */}
+          {/* Left */}
 
-          <div className={`flex-1 w-full ${view==2 && 'hidden'}`}>
+          <div className={`flex-1 w-full ${view == 2 && 'hidden'}`}>
             <div className={`p-0 m-1 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black rounded-md`}>
               {/* {loading ? <>...Parsing Text</> : <>{text}</>}
               {error && <p className='text-red-500'>Error Parsing Text</p>} */}
@@ -136,18 +137,18 @@ const File = ({ params }: any) => {
           </div>
 
           {/* Right */}
-          <div className={`flex-1 overflow-hidden ${view==1 && 'hidden'}`}>
+          <div className={`flex-1 overflow-hidden ${view == 1 && 'hidden'}`}>
             <div className='flex flex-row gap-1 justify-around rounded-sm'>
               <motion.button
-                  // whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-               className={`flex-1 rounded-md p-2 border-2 border-slate-400 ${tab == "chat" && 'bg-slate-400'}`} onClick={() => setTab("chat")}>Chat</motion.button>
+                // whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className={`flex-1 rounded-md p-2 border-2 border-slate-400 ${tab == "chat" && 'bg-slate-400'}`} onClick={() => setTab("chat")}>Chat</motion.button>
               <motion.button
-                          //  whileHover={{ scale: 1.05 }}
-                           whileTap={{ scale: 0.95 }}
-                           transition={{ type: "spring", stiffness: 300 }}
-               className={`flex-1 rounded-md border-2 border-slate-400 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</motion.button>
+                //  whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className={`flex-1 rounded-md border-2 border-slate-400 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</motion.button>
             </div>
             {tab == "chat" ?
               <div>

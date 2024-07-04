@@ -4,9 +4,10 @@ import { usePathname, useRouter } from 'next/navigation'
 import React, { useContext, useEffect, useState } from 'react'
 import ThemeToggle from "./themeToggle/ThemeToggle"
 import { ThemeContext } from '@/context/ThemeContext'
-import { Icon } from '@iconify/react/dist/iconify.js'
+// import { Icon } from '@iconify/react/dist/iconify.js'
 import Image from 'next/image'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
+import ProfileDd from './ProfileDd'
 
 const Navbar = () => {
   const router = useRouter()
@@ -47,7 +48,7 @@ const Navbar = () => {
 
   return (
     <div className={`p-4 flex justify-between items-center shadow-lg`}>
-      <div className='flex flex-row gap-2'>
+      <div className='flex flex-row gap-2 ml-4'>
       <div onClick={goHome} className='md:block hidden text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
         Research Buddy
       </div>  
@@ -57,13 +58,16 @@ const Navbar = () => {
       </div>    
       
       {status === "authenticated" &&
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4 mr-5'>
+          <ProfileDd user={data?.user}/>
           <ThemeToggle/>
-          <span className='hidden sm:inline'>{data?.user?.name}</span>
-          <img className='w-10 h-10 rounded-full' src={data?.user?.image ?? ""} alt='user' />
-          <button onClick={handleOpen} title='Logout'>
+          {/* <span className='hidden sm:inline'>{data?.user?.name}</span> */}
+          {/* <img className='w-10 h-10 rounded-full' src={data?.user?.image ?? ""} alt='user' /> */}
+          {/* <button onClick={handleOpen} title='Logout'>
             <Icon icon="material-symbols:logout-sharp" style={{fontSize:30}}/>
-          </button>
+          </button> */}
+          
+
         </div>
       }
       {status === "unauthenticated" && pathname == "/" &&
@@ -81,11 +85,12 @@ const Navbar = () => {
           Home
         </button>
         </div>
+        
       }
        <Dialog open={open} onClose={handleClose}>
-        {/* <DialogTitle>{"Confirm Deletion"}</DialogTitle> */}
-        <DialogContent>
-          <DialogContentText>
+        <DialogTitle >{"Confirm Logout"}</DialogTitle>
+        <DialogContent >
+          <DialogContentText >
             Are you sure you want to logout?
           </DialogContentText>
         </DialogContent>

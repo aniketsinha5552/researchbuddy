@@ -4,24 +4,27 @@ import Loading from '@/components/Loading'
 import Loading2 from '@/components/Loading2'
 import Notes from '@/components/Notes'
 import PdfViewer from '@/components/PdfViewer'
-import Button from '@/components/button'
 import { ThemeContext } from '@/context/ThemeContext'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import axios from 'axios'
-import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { motion } from 'framer-motion'
-import { MenuItem, Select, TextField } from '@mui/material'
+import { MenuItem, Select} from '@mui/material'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 const File = ({ params }: any) => {
 
   const { theme } = useContext(ThemeContext)
   const { slug } = params
   const [file, setFile] = useState<any>(null)
-  const [text, setText] = useState<string>("")
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [fileName, setFileName] = useState("")
   const [tab, setTab] = useState("chat")
@@ -86,34 +89,47 @@ const File = ({ params }: any) => {
 
   return (
     <div className='min-h-screen'>
+      <div className='py-3 px-6'>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/home">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink>File</BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
       {file &&
         <div className='flex flex-col justify-center items-center gap-2 '>
           {editMode == true ?
             <div className='flex  flex-col md:flex-row items-center gap-2'>
-              <input onChange={onChange} className='p-1 border-2 bg-transparent border-gray-200 rounded-sm text-xl md:text-2xl mt-1 text-center' value={fileName} />
+              <input onChange={onChange} className='p-1 border-2 bg-transparent border-gray-200 rounded-sm text-lg md:text-xl text-center' value={fileName} />
               <button className='rounded p-1 border-2 border-gray-200' onClick={onSave}>Save</button>
               <button className='rounded p-1 border-2 border-gray-200' onClick={onCancel}>Cancel</button>
             </div>
             :
             <div className='flex flex-col md:flex-row items-center gap-2'>
-              <h1 className='text-xl font-bold md:text-2xl mt-4 text-center px-4'>{fileName}</h1>
+              <h1 className='text-xl md:text-2xl text-center px-4'>{fileName}</h1>
               <button onClick={() => setEditMode(true)}>
                 <Icon style={{ fontSize: 24 }} icon="material-symbols-light:edit-outline" />
               </button>
             </div>
           }
-          {file.embed == true &&
+          {/* {file.embed == true &&
             <div className='px-3 m-2'>
               <h2 className='text-xl'>About</h2>
               <p className='text-lg italic'>{file.summary}</p>
-            </div>}
+            </div>} */}
         </div>
       }
 
-      <div className='flex flex-row justify-center'>
+      <div className='flex flex-row justify-center mt-2 '>
 
         {file &&
-          <Select style={{ color: "gray" }} value={view} label="View" onChange={(e: any) => setView(e.target.value)}>
+          <Select size='small' style={{ color: "gray" }} value={view} label="View" onChange={(e: any) => setView(e.target.value)}>
             <MenuItem value={0}>View PDF & Chat</MenuItem>
             <MenuItem value={1}>View PDF Only</MenuItem>
             <MenuItem value={2}>View Chat Only</MenuItem>

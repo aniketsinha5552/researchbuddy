@@ -43,7 +43,7 @@ const ProfileDd = ({ user }: { user: any }) => {
 
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={()=>router.push(`/profile`)}>
                             Profile
                             <DropdownMenuShortcut><Icon icon="iconamoon:profile" style={{fontSize:20}} /></DropdownMenuShortcut>
                         </DropdownMenuItem>

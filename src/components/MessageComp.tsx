@@ -29,7 +29,7 @@ const MessageComp = ({ message }:{
                 }`}
         >
 
-            <p className={` ${message.type === 'USER' ? 'text-right' : 'text-left'}`}>{message.text}
+            <p className={`md:text-md text-sm ${message.type === 'USER' ? 'text-right' : 'text-left'}`}>{message.text}
             {showTooltip && (
                 <div className="absolute bottom-0 right-0 text-white text-xs rounded p-1">
                     <Icon icon="iconamoon:copy" />

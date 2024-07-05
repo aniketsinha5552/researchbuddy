@@ -88,7 +88,7 @@ const Chatbox = ({ slug, file }: {
   return (
     <div className="flex flex-col items-center py-2 flex-1 overflow-hidden">
       <div className={`w-full max-w-full rounded-lg shadow-md p-4 ${theme == "dark" ? 'bg-slate-800' : 'bg-slate-300'}`}>
-        <div ref={chatContainerRef} className="mb-4 space-y-2 min-h-[70vh] max-h-[70vh] overflow-y-auto overflow-x-hidden p-2">
+        <div ref={chatContainerRef} className="mb-4 space-y-2 min-h-[60vh] max-h-[70vh] overflow-y-auto overflow-x-hidden p-2">
           {chat ? chat.map((message: Message, idx: number) => (
             <MessageComp message={message} key={idx} />
           )): <Loading/>}

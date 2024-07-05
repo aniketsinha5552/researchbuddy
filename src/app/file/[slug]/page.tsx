@@ -10,7 +10,7 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { motion } from 'framer-motion'
-import { MenuItem, Select} from '@mui/material'
+import { MenuItem, Select } from '@mui/material'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,6 +18,11 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
 
 const File = ({ params }: any) => {
 
@@ -126,7 +131,7 @@ const File = ({ params }: any) => {
         </div>
       }
 
-      <div className='flex flex-row justify-center mt-2 '>
+      {/* <div className='flex flex-row justify-center mt-2 '>
 
         {file &&
           <Select size='small' style={{ color: "gray" }} value={view} label="View" onChange={(e: any) => setView(e.target.value)}>
@@ -136,32 +141,68 @@ const File = ({ params }: any) => {
 
           </Select>
         }
-      </div>
+      </div> */}
 
 
       {file &&
-        <div className='p-5 flex flex-col md:flex-row'>
-
-          {/* Left */}
-
-          <div className={`flex-1 w-full ${view == 2 && 'hidden'}`}>
-            <div className={`p-0 m-1 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black rounded-md`}>
-              {/* {loading ? <>...Parsing Text</> : <>{text}</>}
-              {error && <p className='text-red-500'>Error Parsing Text</p>} */}
-              <PdfViewer fileUrl={file.url} />
-            </div>
+        <div className='p-5 flex flex-col hidden md:block'>
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel>
+              <div className={`flex-1 w-full ${view == 2 && 'hidden'}`}>
+                <div className={`p-0 m-1 border-1  overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a] border-gray-100' : 'bg-[#ddd] border-gray-900'} text-black`}>
+                  <PdfViewer fileUrl={file.url} />
+                </div>
+              </div>
+            </ResizablePanel>
+            <ResizableHandle />
+            <ResizablePanel>
+              <div className={`flex-1 overflow-hidden ${view == 1 && 'hidden'}`}>
+                <div className='flex flex-row gap-1 justify-around rounded-sm'>
+                  <motion.button
+                    // whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className={`flex-1 rounded-md p-2 mx-2 border-2 border-slate-400 ${tab == "chat" && 'bg-slate-400'}`} onClick={() => setTab("chat")}>Chat</motion.button>
+                  <motion.button
+                    //  whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className={`flex-1 rounded-md border-2 mx-2 border-slate-400 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</motion.button>
+                </div>
+                {tab == "chat" ?
+                  <div>
+                    {file.embed == false ?
+                      <div className='m-2 p-2 text-center'>
+                        {loading ?
+                          <Loading2 /> :
+                          <div className='min-h-[60vh] flex flex-col justify-center items-center'>
+                            <p>Analyze the document to chat</p>
+                            <button className={`bg-blue-500 rounded-md m-2 p-2`} onClick={analyze}>Analyze 🪄</button>
+                          </div>}
+                      </div>
+                      : <Chatbox slug={slug} file={file} />}
+                  </div>
+                  :
+                  <Notes />
+                }
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+          <ToastContainer />
+        </div>
+      }
+      {file &&
+        <div className={`flex flex-col gap-2 overflow-scroll md:hidden block`}>
+          <div className={`p-0 mx-5 overflow-y-auto overflow-x-hidden ${theme == "dark" ? 'bg-[#0f172a]' : 'bg-[#ddd]'} text-black`}>
+            <PdfViewer fileUrl={file.url} />
           </div>
-
-          {/* Right */}
-          <div className={`flex-1 overflow-hidden ${view == 1 && 'hidden'}`}>
+          <div className={`flex-1 overflow-scroll  mx-5 ${view == 1 && 'hidden'}`}>
             <div className='flex flex-row gap-1 justify-around rounded-sm'>
               <motion.button
-                // whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className={`flex-1 rounded-md p-2 border-2 border-slate-400 ${tab == "chat" && 'bg-slate-400'}`} onClick={() => setTab("chat")}>Chat</motion.button>
               <motion.button
-                //  whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className={`flex-1 rounded-md border-2 border-slate-400 p-2 ${tab == "notes" && 'bg-slate-400'}`} onClick={() => setTab("notes")}>Notes</motion.button>
@@ -183,9 +224,7 @@ const File = ({ params }: any) => {
               <Notes />
             }
           </div>
-          <ToastContainer />
-        </div>
-      }
+        </div>}
       {
         !file && <Loading />
       }

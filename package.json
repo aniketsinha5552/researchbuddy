@@ -43,6 +43,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "react-lottie": "^1.2.4",
+    "react-resizable-panels": "^2.0.20",
     "react-toastify": "^10.0.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

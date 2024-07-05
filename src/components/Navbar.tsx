@@ -48,17 +48,17 @@ const Navbar = () => {
 
   return (
     <div className={`p-4 flex justify-between items-center shadow-lg`}>
-      <div className='flex flex-row gap-2 ml-4'>
-      <div onClick={goHome} className='md:block hidden text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
-        Research Buddy
-      </div>  
+      <div className='flex flex-row gap-3 ml-8'>
       <div onClick={goHome} className='text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
         <Image src="/rb.jpg" alt='' width={40} height={40} className='rounded-lg'/>
       </div>
+      <div onClick={goHome} className='md:block hidden text-3xl font-semibold cursor-pointer hover:text-gray-600 transition-colors'>
+        Research Buddy
+      </div>  
       </div>    
       
       {status === "authenticated" &&
-        <div className='flex items-center gap-4 mr-5'>
+        <div className='flex items-center gap-4 mr-8'>
           <ProfileDd user={data?.user}/>
           <ThemeToggle/>
           {/* <span className='hidden sm:inline'>{data?.user?.name}</span> */}

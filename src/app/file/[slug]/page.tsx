@@ -146,6 +146,7 @@ const File = ({ params }: any) => {
 
       {file &&
         <div className='p-5 flex flex-col hidden md:block'>
+          <p className='mb-1 text-sm italic text-center text-gray-400'>Drag to resize the panel</p>
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel>
               <div className={`flex-1 w-full ${view == 2 && 'hidden'}`}>

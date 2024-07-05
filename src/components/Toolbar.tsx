@@ -102,7 +102,7 @@ const Toolbar = ({ editor, content }: Props) => {
         >
           <Strikethrough className="w-5 h-5" />
         </button>
-        <button
+        {/* <button
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 2 }).run();
@@ -167,7 +167,7 @@ const Toolbar = ({ editor, content }: Props) => {
           }
         >
           <Code className="w-5 h-5" />
-        </button>
+        </button> */}
         <button
           onClick={(e) => {
             e.preventDefault();

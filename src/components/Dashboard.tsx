@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [files, setFiles] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedFileId, setSelectedFileId] = useState("");
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const getFiles = async () => {
     setLoading(true)
@@ -23,7 +23,7 @@ const Dashboard = () => {
       setFiles(res.data.files);
     } catch (e: any) {
       //  
-    }finally{
+    } finally {
       setLoading(false)
     }
 
@@ -63,7 +63,7 @@ const Dashboard = () => {
       </div>
       <h2 className="text-xl mt-8 m-6 flex justify-start items-center gap-2">My Documents <Icon icon="oui:documents" /></h2>
       <div className="flex flex-row ml-4 w-full flex-wrap gap-8 justify-center md:justify-start p-2">
-        { (files.length > 0 && loading==false)? 
+        {(files.length > 0 && loading == false) ?
           files.map((file: any) => {
             return (
               <div onClick={() => router.push(`/file/${file.id}`)} key={file.id}>
@@ -86,11 +86,11 @@ const Dashboard = () => {
                 </Card>
               </div>
             );
-          }):
-          (files.length == 0 && loading==false) ?
-            <div>No Files Uploaded :( </div> :
-            <Loading2/>
-            }
+          }) :
+          (files.length == 0 && loading == false) ?
+            <div className="text-sm">No Files Uploaded :( </div> :
+            <Loading2 />
+        }
       </div>
 
       <Dialog open={open} onClose={handleClose}>

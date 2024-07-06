@@ -43,7 +43,7 @@ const File = ({ params }: any) => {
     setFile(res.data)
     setFileName(res.data.name)
     setMessages(res.data.messages)
-    setContent(res.data.note[0].content)
+    setContent(res?.data?.note[0]?.content??"Start taking notes")
     // generateText(res?.data?.id)
   }
 

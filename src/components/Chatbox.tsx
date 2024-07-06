@@ -16,8 +16,6 @@ const Chatbox = ({ slug, file,messages,setMessages }: {
   setMessages:any
 }) => {
 
-  console.log(messages)
-
   const { theme } = useContext(ThemeContext)
   const chatContainerRef = useRef<any>(null);
 

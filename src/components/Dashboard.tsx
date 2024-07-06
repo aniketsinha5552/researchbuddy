@@ -68,13 +68,13 @@ const Dashboard = () => {
             return (
               <div onClick={() => router.push(`/file/${file.id}`)} key={file.id}>
                 <Card>
-                  <p className="text-bold text-xl max-w-96 overflow-hidden break-words">
+                  <p className="text-bold text-lg md:text-xl max-w-96 overflow-hidden break-words">
                     {file.name.substring(0, 60)}
                   </p>
-                  <p className="text-md text-slate-500 flex items-center gap-1">
+                  <p className="md:text-md text-sm text-slate-500 flex items-center gap-1">
                     {file._count.messages} <Icon icon="iconoir:message-solid" /> 
                   </p>
-                  <p className="text-md text-slate-500">
+                  <p className="md:text-md text-sm text-slate-500">
                     Created At: {new Date(file.created_at).toDateString()}
                   </p>
                   <button

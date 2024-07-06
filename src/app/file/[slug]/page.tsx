@@ -35,10 +35,15 @@ const File = ({ params }: any) => {
   const [tab, setTab] = useState("chat")
   const [view, setView] = useState(0) // 1: show pdf, 2: show chat, 0: show both
 
+  const [messages,setMessages]= useState([])
+  const [content,setContent] = useState("")
+
   const getFile = async () => {
     let res = await axios.get(`/api/file/${slug}`)
     setFile(res.data)
     setFileName(res.data.name)
+    setMessages(res.data.messages)
+    setContent(res.data.note[0].content)
     // generateText(res?.data?.id)
   }
 
@@ -181,10 +186,10 @@ const File = ({ params }: any) => {
                             <button className={`bg-blue-500 rounded-md m-2 p-2`} onClick={analyze}>Analyze 🪄</button>
                           </div>}
                       </div>
-                      : <Chatbox slug={slug} file={file} />}
+                      : <Chatbox messages={messages} setMessages={setMessages} slug={slug} file={file} />}
                   </div>
                   :
-                  <Notes />
+                  <Notes setContent={setContent} content= {content} />
                 }
               </div>
             </ResizablePanel>
@@ -219,10 +224,10 @@ const File = ({ params }: any) => {
                         <button className={`bg-blue-500 rounded-md m-2 p-2`} onClick={analyze}>Analyze 🪄</button>
                       </div>}
                   </div>
-                  : <Chatbox slug={slug} file={file} />}
+                  : <Chatbox messages={messages} setMessages={setMessages} slug={slug} file={file} />}
               </div>
               :
-              <Notes />
+              <Notes setContent={setContent} content= {content} />
             }
           </div>
         </div>}

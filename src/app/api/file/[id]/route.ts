@@ -13,6 +13,10 @@ export const GET = async(req:Request,{params}:any)=>{
         const file = await prisma.file.findFirst({
             where:{
                 id: id
+            },
+            include:{
+                messages:true,
+                note : true
             }
         })
         await prisma.$disconnect()

@@ -61,7 +61,7 @@ const Dashboard = () => {
       <div className={`w-fit m-auto p-5 border-2 border-gray-400 border-dotted rounded-xl`}>
         <FileUpload getFiles={getFiles} />
       </div>
-      <h2 className="text-xl mt-8 m-6 flex justify-start items-center gap-2">My Documents <Icon icon="oui:documents" /></h2>
+      <h2 className="text-xl mt-8 m-6 flex justify-center md:justify-start items-center gap-2">My Documents <Icon icon="oui:documents" /></h2>
       <div className="flex flex-row ml-4 w-full flex-wrap gap-8 justify-center md:justify-start p-2">
         {(files.length > 0 && loading == false) ?
           files.map((file: any) => {
@@ -70,6 +70,9 @@ const Dashboard = () => {
                 <Card>
                   <p className="text-bold text-xl max-w-96 overflow-hidden break-words">
                     {file.name.substring(0, 60)}
+                  </p>
+                  <p className="text-md text-slate-500 flex items-center gap-1">
+                    {file._count.messages} <Icon icon="iconoir:message-solid" /> 
                   </p>
                   <p className="text-md text-slate-500">
                     Created At: {new Date(file.created_at).toDateString()}

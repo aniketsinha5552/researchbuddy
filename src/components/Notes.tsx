@@ -5,24 +5,27 @@ import axios from 'axios'
 import { usePathname } from 'next/navigation'
 import Loading from './Loading'
 
-const Notes = () => {
+const Notes = ({content,setContent}:{
+  content:any,
+  setContent: any
+}) => {
     const { theme } = useContext(ThemeContext)
-    const [content, setContent] = useState<any>(null)
+    // const [content, setContent] = useState<any>(note.content)
     const handleContentChange = (reason: any) => {
       setContent(reason)
     }
 
-    const pathname = usePathname()
-    const fileId = pathname.split("/")[2]
-    const getNotes = async()=>{
-      let res = await axios.get(`/api/notes?fileId=${fileId}`)
-      console.log(res.data.content)
-      setContent(res.data.content)
-    }
+    // const pathname = usePathname()
+    // const fileId = pathname.split("/")[2]
+    // const getNotes = async()=>{
+    //   let res = await axios.get(`/api/notes?fileId=${fileId}`)
+    //   console.log(res.data.content)
+    //   setContent(res.data.content)
+    // }
 
-    useEffect(()=>{
-      getNotes()
-    },[])
+    // useEffect(()=>{
+    //   getNotes()
+    // },[])
 
 
     return (

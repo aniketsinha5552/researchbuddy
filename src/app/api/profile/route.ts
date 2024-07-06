@@ -17,7 +17,11 @@ export const GET=async(req:Request,res:Response)=>{
                 email: email
             },
             include:{
-                files:true
+                _count:{
+                    select:{
+                        files:true
+                    }
+                }
             }
         })
         await prisma.$disconnect()

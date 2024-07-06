@@ -69,6 +69,7 @@ model File {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
   messages   Message[]
+  note       Notes[]
   summary    String?
 }
 
@@ -89,4 +90,5 @@ model Notes {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
   file_id    String
+  file       File      @relation(fields: [file_id], references: [id])
 }

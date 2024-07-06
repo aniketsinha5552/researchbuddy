@@ -19,6 +19,16 @@ export const GET = async(req:Request,res:Response)=>{
                     email: email
                 }
             },
+            select:{
+                id:true,
+                name: true,
+                created_at: true,
+                _count:{
+                    select:{
+                        messages:true
+                    }
+                }
+            },
             orderBy:[
                 {
                     created_at: "desc"

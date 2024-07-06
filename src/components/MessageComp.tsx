@@ -34,7 +34,7 @@ const MessageComp = ({ message }:{
             onClick={handleCopy}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
-            className={`relative p-3 m-2 w-fit rounded text-white cursor-pointer ${message.type === 'USER' ? 'bg-green-500 ml-auto hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600 mr-auto'
+            className={`relative p-3 m-2 mb-1 w-fit rounded text-white cursor-pointer ${message.type === 'USER' ? 'bg-green-500 ml-auto hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600 mr-auto'
                 }`}
         >
            
@@ -49,8 +49,8 @@ const MessageComp = ({ message }:{
             {/* <ToastContainer/> */}
         </div>
         <div className={`text-righ flex mb-4  ${message.type === 'USER' ? 'flex-row-reverse' : 'flex-row'}`}>
-        <Avatar >
-            <AvatarImage src={message.type === 'USER' ? data?.user?.image ?? "" : botUrl} alt="https://github.com/shadcn.png" />
+        <Avatar className='md:h-8 md:w-8 h-6 w-6 border-2 border-gray-400'>
+            <AvatarImage  src={message.type === 'USER' ? data?.user?.image ?? "" : botUrl} alt="https://github.com/shadcn.png" />
         </Avatar>
         </div>
  

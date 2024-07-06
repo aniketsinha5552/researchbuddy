@@ -4,21 +4,27 @@ import Card from "@/components/card";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
+import { ThemeContext } from "@emotion/react";
+import Loading2 from "./Loading2";
 
 const Dashboard = () => {
   const [files, setFiles] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedFileId, setSelectedFileId] = useState("");
+  const [loading,setLoading] = useState(false)
 
   const getFiles = async () => {
-    try{
-      let res = await axios.get("/api/files");
+    setLoading(true)
+    try {
+      let res = await axios.get("/api/files?cache=true");
       //  console.log(res.data.files);
-       setFiles(res.data.files);
-    }catch(e:any){
+      setFiles(res.data.files);
+    } catch (e: any) {
       //  
+    }finally{
+      setLoading(false)
     }
 
   };
@@ -52,11 +58,12 @@ const Dashboard = () => {
       <div className="md:text-3xl text-2xl text-bold text-center mb-10">
         Upload & Start Interacting with Your Files
       </div>
-      <div className="flex flex-row flex-wrap gap-8 justify-center md:justify-start p-2">
-        <Card>
-          <FileUpload getFiles={getFiles} />
-        </Card>
-        {files.length > 0 &&
+      <div className={`w-fit m-auto p-5 border-2 border-gray-400 border-dotted rounded-xl`}>
+        <FileUpload getFiles={getFiles} />
+      </div>
+      <h2 className="text-xl mt-8 m-6 flex justify-start items-center gap-2">My Documents <Icon icon="oui:documents" /></h2>
+      <div className="flex flex-row ml-4 w-full flex-wrap gap-8 justify-center md:justify-start p-2">
+        { (files.length > 0 && loading==false)? 
           files.map((file: any) => {
             return (
               <div onClick={() => router.push(`/file/${file.id}`)} key={file.id}>
@@ -79,7 +86,11 @@ const Dashboard = () => {
                 </Card>
               </div>
             );
-          })}
+          }):
+          (files.length == 0 && loading==false) ?
+            <div>No Files Uploaded :( </div> :
+            <Loading2/>
+            }
       </div>
 
       <Dialog open={open} onClose={handleClose}>

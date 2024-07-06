@@ -1,9 +1,11 @@
 "use client"
-import React from 'react'
+import React, { useContext } from 'react'
 import Lottie from "react-lottie";
 import loadAnimation from "../../public/load.json"
+import { ThemeContext } from '@emotion/react';
 
 const Loading2 = () => {
+  const {theme} = useContext<any>(ThemeContext)
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -13,7 +15,7 @@ const Loading2 = () => {
     },
   };
   return (
-    <div className='min-h-[60vh] flex justify-center items-center'>  
+    <div className='min-h-[60vh] flex justify-center items-center '>  
         <Lottie
           options={defaultOptions}
           height={300}
